@@ -3,12 +3,12 @@
 page_title: "coxedge_environment Resource - terraform-provider-coxedge"
 subcategory: ""
 description: |-
-  
+  Environments allow you to manage resources of a specific service and to manage your users' access to them. With environment roles, you have tight control of what a user is allowed to do in your environment. A general use case of environments is to split your resources into different deployment environments (e.g. dev, staging and production). The advantage is that resources of different deployments are isolated from each other and you can restrict user access to your most critical resources.
 ---
 
 # coxedge_environment (Resource)
 
-
+Environments allow you to manage resources of a specific service and to manage your users' access to them. With environment roles, you have tight control of what a user is allowed to do in your environment. A general use case of environments is to split your resources into different deployment environments (e.g. dev, staging and production). The advantage is that resources of different deployments are isolated from each other and you can restrict user access to your most critical resources.
 
 
 
@@ -17,17 +17,33 @@ description: |-
 
 ### Required
 
-- `organization_id` (String)
-- `service_connection_id` (String)
+- `organization_id` (String) The organization that the environment should be created in. Defaults to your organization.Required: id
+- `service_connection_id` (String) The service connection that the environment should be created in. Required: id
 
 ### Optional
 
-- `description` (String)
-- `name` (String)
+- `description` (String) The description of the environment.
+- `id` (String) The id of the environment.
+- `membership` (String) Type of membership of the environment. ALL_ORG_USERS will add every user in the organization to this environment with the default role. MANY_USERS will allow you to choose the users you want in the environment and assigned them specific roles. Defaults to MANY_USERS.
+- `name` (String) The name of the new environment. Should be unique in the environment and only contain lower case characters, numbers, dashes and underscores.
+- `roles` (Block List) The roles of the environment and the users assigned to them. Also, defines the default role of the environment.
+required: name, users.id
+optional: isDefault (see [below for nested schema](#nestedblock--roles))
 
 ### Read-Only
 
-- `creation_date` (String)
-- `id` (String) The ID of this resource.
+- `creation_date` (String) The date in ISO 8601 that the environment was created.
+
+<a id="nestedblock--roles"></a>
+### Nested Schema for `roles`
+
+Required:
+
+- `name` (String) Name of the role
+- `users` (List of String) Array of users Id
+
+Optional:
+
+- `is_default` (Boolean) Set to default role
 
 

@@ -18,7 +18,7 @@ description: |-
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-- `organizations` (List of Object) (see [below for nested schema](#nestedatt--organizations))
+- `organizations` (List of Object) Organization details (see [below for nested schema](#nestedatt--organizations))
 
 <a id="nestedatt--organizations"></a>
 ### Nested Schema for `organizations`

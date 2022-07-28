@@ -26,6 +26,7 @@ func getOrganizationSetSchema() map[string]*schema.Schema {
 			Elem: &schema.Resource{
 				Schema: getOrganizationSchema(),
 			},
+			Description: "Organization details",
 		},
 	}
 }
@@ -33,8 +34,9 @@ func getOrganizationSetSchema() map[string]*schema.Schema {
 func getOrganizationBillingInfoSetSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The id of the billing information",
 		},
 		"organizations_billing_info": {
 			Type:     schema.TypeList,
@@ -42,6 +44,7 @@ func getOrganizationBillingInfoSetSchema() map[string]*schema.Schema {
 			Elem: &schema.Resource{
 				Schema: getOrganizationBillingInfoSchema(),
 			},
+			Description: "The organization billing information",
 		},
 	}
 }
@@ -49,8 +52,9 @@ func getOrganizationBillingInfoSetSchema() map[string]*schema.Schema {
 func getOrganizationBillingInfoSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The id of the billing information",
 		},
 		"organization_id": {
 			Type:     schema.TypeString,
@@ -106,16 +110,19 @@ func getOrganizationBillingInfoSchema() map[string]*schema.Schema {
 func getOrganizationSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The id of the organization",
 		},
 		"name": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The name of the organization",
 		},
 		"entry_point": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The entry point of the organization is the subdomain of the organization in the Cox Edge URL : [entryPoint].Cox Edge",
 		},
 		"tags": {
 			Type:     schema.TypeList,
@@ -123,10 +130,12 @@ func getOrganizationSchema() map[string]*schema.Schema {
 			Elem: &schema.Schema{
 				Type: schema.TypeString,
 			},
+			Description: "Tags associated to the organization",
 		},
 		"service_connections": {
-			Type:     schema.TypeList,
-			Computed: true,
+			Type:        schema.TypeList,
+			Computed:    true,
+			Description: "The services for which the organization is allowed to provision resources. Includes: id,serviceCode",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"id": {
@@ -155,8 +164,9 @@ func getEnvironmentSetSchema() map[string]*schema.Schema {
 			Optional: true,
 		},
 		"environments": &schema.Schema{
-			Type:     schema.TypeList,
-			Computed: true,
+			Type:        schema.TypeList,
+			Computed:    true,
+			Description: "Environment descriptions",
 			Elem: &schema.Resource{
 				Schema: getEnvironmentSchema(),
 			},
@@ -204,51 +214,62 @@ func getRolesSchema() map[string]*schema.Schema {
 func getEnvironmentSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": {
-			Type:     schema.TypeString,
-			Computed: true,
-			Optional: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Optional:    true,
+			Description: "The id of the environment.",
 		},
 		"name": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The name of the new environment. Should be unique in the environment and only contain lower case characters, numbers, dashes and underscores.",
 		},
 		"description": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The description of the environment.",
 		},
 		"membership": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Type of membership of the environment. ALL_ORG_USERS will add every user in the organization to this environment with the default role. MANY_USERS will allow you to choose the users you want in the environment and assigned them specific roles. Defaults to MANY_USERS.",
 		},
 		"organization_id": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The organization that the environment should be created in. Defaults to your organization.Required: id",
 		},
 		"service_connection_id": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The service connection that the environment should be created in. Required: id",
 		},
 		"creation_date": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The date in ISO 8601 that the environment was created.",
 		},
 		"roles": {
-			Type:     schema.TypeList,
-			Optional: true,
+			Type:        schema.TypeList,
+			Optional:    true,
+			Description: "The roles of the environment and the users assigned to them. Also, defines the default role of the environment.\nrequired: name, users.id\noptional: isDefault",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"name": {
-						Type:     schema.TypeString,
-						Required: true,
+						Type:        schema.TypeString,
+						Required:    true,
+						Description: "Name of the role",
 					},
 					"is_default": {
-						Type:     schema.TypeBool,
-						Optional: true,
-						Default:  false,
+						Type:        schema.TypeBool,
+						Optional:    true,
+						Default:     false,
+						Description: "Set to default role",
 					},
 					"users": {
-						Type:     schema.TypeList,
-						Required: true,
+						Type:        schema.TypeList,
+						Required:    true,
+						Description: "Array of users Id",
 						Elem: &schema.Schema{
 							Type: schema.TypeString,
 						},
@@ -262,36 +283,43 @@ func getEnvironmentSchema() map[string]*schema.Schema {
 func getUserSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"user_name": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "Username of the new user. Should be unique across the organization.",
 		},
 		"first_name": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "First name of the user.",
 		},
 		"last_name": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "Last name of the user.",
 		},
 		"email": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "Email of the user. Should be unique across the organization.",
 		},
 		"organization_id": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "Organization in which the user will be created. Defaults to your organization. Required: id",
 		},
 		"roles": {
 			Type: schema.TypeList,
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"id": {
-						Type:     schema.TypeString,
-						Required: true,
+						Type:        schema.TypeString,
+						Required:    true,
+						Description: "Role Id",
 					},
 				},
 			},
-			Optional: true,
+			Optional:    true,
+			Description: "The system and environment roles to give to the user.",
 		},
 		"last_updated": {
 			Type:     schema.TypeString,
@@ -859,24 +887,29 @@ func getOriginSettingsSchema() map[string]*schema.Schema {
 func getDeliveryDomainSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The delivery domain unique identifier.",
 		},
 		"stack_id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The ID of the stack that the site belongs to.",
 		},
 		"environment_name": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The name of the environment that the site belongs to.",
 		},
 		"domain": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The site's domain name.",
 		},
 		"site_id": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The ID of the site for which to list delivery domains. This parameter is required.",
 		},
 	}
 }
@@ -884,36 +917,43 @@ func getDeliveryDomainSchema() map[string]*schema.Schema {
 func getCDNSettingsSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"site_id": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "A site's unique identifier.",
 		},
 		"environment_name": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The name of the environment that the site belongs to.",
 		},
 		"cache_expire_policy": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "A site's cache expiry policy. Can be ORIGIN_CONTROLLED, SPECIFY_CDN_TTL, NEVER_EXPIRE, or DO_NOT_CACHE.",
 		},
 		"cache_ttl": {
-			Type:     schema.TypeInt,
-			Optional: true,
+			Type:        schema.TypeInt,
+			Optional:    true,
+			Description: "The time to live for the cache, in seconds. Depends on the cache expiry policy.",
 		},
 		"query_string_control": {
-			Type:     schema.TypeString,
-			Optional: true,
-			Default:  "",
+			Type:        schema.TypeString,
+			Optional:    true,
+			Default:     "",
+			Description: "The strategy for caching query strings. Can be IGNORE, CACHE_ALL or CUSTOM.",
 		},
 		"custom_cached_query_strings": {
 			Type: schema.TypeList,
 			Elem: &schema.Schema{
 				Type: schema.TypeString,
 			},
-			Optional: true,
+			Optional:    true,
+			Description: "List of custom cached query strings. Only visible if the queryStringControl attribute is CUSTOM.",
 		},
 		"dynamic_caching_by_header_enabled": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Whether or not to enable dynamic caching by headers.",
 			ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 				var diags diag.Diagnostics
 				value := i.(string)
@@ -934,11 +974,13 @@ func getCDNSettingsSchema() map[string]*schema.Schema {
 			Elem: &schema.Schema{
 				Type: schema.TypeString,
 			},
-			Optional: true,
+			Optional:    true,
+			Description: "A list of custom cached headers. Only visible if dynamicCachingByHeaderEnabled is true.",
 		},
 		"gzip_compression_enabled": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Whether or not to enable gzip compression.",
 			ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 				var diags diag.Diagnostics
 				value := i.(string)
@@ -955,12 +997,14 @@ func getCDNSettingsSchema() map[string]*schema.Schema {
 			},
 		},
 		"gzip_compression_level": {
-			Type:     schema.TypeInt,
-			Optional: true,
+			Type:        schema.TypeInt,
+			Optional:    true,
+			Description: "The level for the gzip compression. Values are between 1 to 6. Only visible is gzipCompressionEnabled is true.",
 		},
 		"content_persistence_enabled": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Whether or not make cached content available after its expiration time.",
 			ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 				var diags diag.Diagnostics
 				value := i.(string)
@@ -977,12 +1021,14 @@ func getCDNSettingsSchema() map[string]*schema.Schema {
 			},
 		},
 		"maximum_stale_file_ttl": {
-			Type:     schema.TypeInt,
-			Optional: true,
+			Type:        schema.TypeInt,
+			Optional:    true,
+			Description: "The maximum time to live for stale files, in seconds. Only visible if contentPersistenceEnabled is true.",
 		},
 		"vary_header_enabled": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Whether or not to enable honoring the vary header in a request.",
 			ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 				var diags diag.Diagnostics
 				value := i.(string)
@@ -999,12 +1045,14 @@ func getCDNSettingsSchema() map[string]*schema.Schema {
 			},
 		},
 		"browser_cache_ttl": {
-			Type:     schema.TypeInt,
-			Optional: true,
+			Type:        schema.TypeInt,
+			Optional:    true,
+			Description: "Sets the default browser expiration time for cached assets, in seconds.",
 		},
 		"cors_header_enabled": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Sets the Access-Control-Allow-Origin header to allow browsers to access this domain from other origins.",
 			ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 				var diags diag.Diagnostics
 				value := i.(string)
@@ -1021,19 +1069,22 @@ func getCDNSettingsSchema() map[string]*schema.Schema {
 			},
 		},
 		"allowed_cors_origins": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The strategy for allowing cors origins. Can be SPECIFY_ORIGINS or ALL_ORIGINS.",
 		},
 		"origins_to_allow_cors": {
 			Type: schema.TypeList,
 			Elem: &schema.Schema{
 				Type: schema.TypeString,
 			},
-			Optional: true,
+			Optional:    true,
+			Description: "A list of origins to allow cors requests from. Only visible if allowedCorsOrigins is set to SPECIFY_ORIGINS.",
 		},
 		"http2_support_enabled": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Whether or not to enable supporting applications using HTTP/2 protocol.",
 			ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 				var diags diag.Diagnostics
 				value := i.(string)
@@ -1050,8 +1101,9 @@ func getCDNSettingsSchema() map[string]*schema.Schema {
 			},
 		},
 		"http2_server_push_enabled": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Whether or not to push assets to the client or browser (user) in advance (before the user requests these assets) which enables faster load times.",
 			ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 				var diags diag.Diagnostics
 				value := i.(string)
@@ -1068,12 +1120,14 @@ func getCDNSettingsSchema() map[string]*schema.Schema {
 			},
 		},
 		"link_header": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The link header for http2ServerPush, only visible if http2ServerPushEnabled is true.",
 		},
 		"canonical_header_enabled": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Whether or not to enable setting Link: http://{hostname}/URI; rel=\"canonical\" header on each response.",
 			ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 				var diags diag.Diagnostics
 				value := i.(string)
@@ -1090,12 +1144,14 @@ func getCDNSettingsSchema() map[string]*schema.Schema {
 			},
 		},
 		"canonical_header": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The hostname for the canonicalHeader, only visible if canonicalHeaderEnabled is true.",
 		},
 		"url_caching_enabled": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Whether or not to enable caching of URLs without file extensions.",
 			ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 				var diags diag.Diagnostics
 				value := i.(string)
@@ -1112,8 +1168,9 @@ func getCDNSettingsSchema() map[string]*schema.Schema {
 			},
 		},
 		"url_caching_ttl": {
-			Type:     schema.TypeInt,
-			Optional: true,
+			Type:        schema.TypeInt,
+			Optional:    true,
+			Description: "The time to live for the url cache. Only visible if urlCachingEnabled is true.",
 		},
 	}
 }
@@ -1121,71 +1178,85 @@ func getCDNSettingsSchema() map[string]*schema.Schema {
 func getCDNPurgeResourceSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"site_id": {
-			Type:     schema.TypeString,
-			Required: true,
-			ForceNew: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			ForceNew:    true,
+			Description: "A site's unique identifier.",
 		},
 		"environment_name": {
-			Type:     schema.TypeString,
-			Required: true,
-			ForceNew: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			ForceNew:    true,
+			Description: "The name of the environment that the site belongs to.",
 		},
 		"purge_type": {
-			Type:     schema.TypeString,
-			Optional: true,
-			Default:  "URL",
-			ForceNew: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Default:     "URL",
+			ForceNew:    true,
+			Description: "The type of cache purge. Can be URL or PATH. Default value is URL.",
 		},
 		"items": {
-			Type:     schema.TypeList,
-			Optional: true,
-			ForceNew: true,
+			Type:        schema.TypeList,
+			Optional:    true,
+			ForceNew:    true,
+			Description: "The items to purge from the CDN.",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"url": {
-						Type:     schema.TypeString,
-						Required: true,
+						Type:        schema.TypeString,
+						Required:    true,
+						Description: "The URL or path at which to delete content.",
 					},
 					"recursive": {
-						Type:     schema.TypeBool,
-						Optional: true,
+						Type:        schema.TypeBool,
+						Optional:    true,
+						Description: "Whether or not to recursively delete content from the CDN.",
 					},
 					"invalidate_only": {
-						Type:     schema.TypeBool,
-						Optional: true,
+						Type:        schema.TypeBool,
+						Optional:    true,
+						Description: "Whether or not to mark the asset as expired and re-validate instead of deleting.",
 					},
 					"purge_all_dynamic": {
-						Type:     schema.TypeBool,
-						Optional: true,
+						Type:        schema.TypeBool,
+						Optional:    true,
+						Description: "Whether or not to purge dynamic versions of assets.",
 					},
 					"headers": {
-						Type:     schema.TypeList,
-						Optional: true,
+						Type:        schema.TypeList,
+						Optional:    true,
+						Description: "A list of HTTP request headers used to construct a cache key to purge content by. These headers must be configured in the site configuration's DynamicContent.headerFields property.",
 						Elem: &schema.Schema{
 							Type: schema.TypeString,
 						},
 					},
 					"purge_selector": {
-						Type:     schema.TypeList,
-						Optional: true,
-						MaxItems: 1,
+						Type:        schema.TypeList,
+						Optional:    true,
+						MaxItems:    1,
+						Description: "A key/value pair definition of content to purge from the CDN.",
 						Elem: &schema.Resource{
 							Schema: map[string]*schema.Schema{
 								"selector_name": {
-									Type:     schema.TypeString,
-									Optional: true,
+									Type:        schema.TypeString,
+									Optional:    true,
+									Description: "The name of the type of content to purge. For example, the name of the HTTP response header. Names are case sensitive.",
 								},
 								"selector_type": {
-									Type:     schema.TypeString,
-									Optional: true,
+									Type:        schema.TypeString,
+									Optional:    true,
+									Description: "The kinds of content that can be purged from the CDN. One of: HEADER (Purge content based on an HTTP response header), TAG (Purge content based on an X-TAG HTTP header value. Purging by tag can be useful when content on the origin is tagged).",
 								},
 								"selector_value": {
-									Type:     schema.TypeString,
-									Optional: true,
+									Type:        schema.TypeString,
+									Optional:    true,
+									Description: "The value of the content to purge. For example, the value of the HTTP response header. Values are case sensitive and may be wild-carded, but cannot match a \"/\".",
 								},
 								"selector_value_delimiter": {
-									Type:     schema.TypeString,
-									Optional: true,
+									Type:        schema.TypeString,
+									Optional:    true,
+									Description: "The delimiter to separate multiple values with. Defaults to \",\".",
 								},
 							},
 						},
@@ -4382,37 +4453,45 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 func getFirewallRuleSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The unique identifier for the rule.",
 		},
 		"environment_name": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The name of the environment that the site belongs to.",
 		},
 		"site_id": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The ID of the site for which the firewall rule is applied to.",
 		},
 		"action": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "Either ALLOW or BLOCK.",
 		},
 		"ip_start": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The start ip address for the rule. When no ipEnd attribute is provided, the rule only applies for the ip provided in ipStart.",
 		},
 		"name": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The name of the rule.",
 		},
 		"enabled": {
-			Type:     schema.TypeBool,
-			Optional: true,
-			Default:  true,
+			Type:        schema.TypeBool,
+			Optional:    true,
+			Default:     true,
+			Description: "Whether or not the rule is enabled. The default value is false.",
 		},
 		"ip_end": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The end ip address for the rule.",
 		},
 	}
 }

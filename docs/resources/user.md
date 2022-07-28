@@ -3,12 +3,12 @@
 page_title: "coxedge_user Resource - terraform-provider-coxedge"
 subcategory: ""
 description: |-
-  
+  A user account allows users to authenticate to an organization and to have access to the resources in it. You can restrict user access to the system and environments by assigning them specific roles. Additionally, every user is given an API key which is needed to use our APIs. All operations done by users are persisted and can be accessed through the activity log.
 ---
 
 # coxedge_user (Resource)
 
-
+A user account allows users to authenticate to an organization and to have access to the resources in it. You can restrict user access to the system and environments by assigning them specific roles. Additionally, every user is given an API key which is needed to use our APIs. All operations done by users are persisted and can be accessed through the activity log.
 
 
 
@@ -17,16 +17,16 @@ description: |-
 
 ### Required
 
-- `email` (String)
-- `first_name` (String)
-- `last_name` (String)
-- `organization_id` (String)
-- `user_name` (String)
+- `email` (String) Email of the user. Should be unique across the organization.
+- `first_name` (String) First name of the user.
+- `last_name` (String) Last name of the user.
+- `organization_id` (String) Organization in which the user will be created. Defaults to your organization. Required: id
+- `user_name` (String) Username of the new user. Should be unique across the organization.
 
 ### Optional
 
 - `last_updated` (String)
-- `roles` (Block List) (see [below for nested schema](#nestedblock--roles))
+- `roles` (Block List) The system and environment roles to give to the user. (see [below for nested schema](#nestedblock--roles))
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ description: |-
 <a id="nestedblock--roles"></a>
 ### Nested Schema for `roles`
 
-Read-Only:
+Required:
 
-- `id` (String) The ID of this resource.
+- `id` (String) Role Id
 
 

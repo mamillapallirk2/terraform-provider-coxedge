@@ -22,7 +22,8 @@ func resourceUser() *schema.Resource {
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
 		},
-		Schema: getUserSchema(),
+		Schema:      getUserSchema(),
+		Description: "A user account allows users to authenticate to an organization and to have access to the resources in it. You can restrict user access to the system and environments by assigning them specific roles. Additionally, every user is given an API key which is needed to use our APIs. All operations done by users are persisted and can be accessed through the activity log.",
 	}
 }
 

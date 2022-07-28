@@ -20,7 +20,8 @@ func resourceCDNPurgeResource() *schema.Resource {
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
 		},
-		Schema: getCDNPurgeResourceSchema(),
+		Schema:      getCDNPurgeResourceSchema(),
+		Description: "Purge all/custom  CDN cached content of a site in a given environment.",
 	}
 }
 

@@ -3,12 +3,12 @@
 page_title: "coxedge_firewall_rule Resource - terraform-provider-coxedge"
 subcategory: ""
 description: |-
-  
+  Deploy and manage Firewall Rules used to control and limit access to your sites.
 ---
 
 # coxedge_firewall_rule (Resource)
 
-
+Deploy and manage Firewall Rules used to control and limit access to your sites.
 
 
 
@@ -17,18 +17,19 @@ description: |-
 
 ### Required
 
-- `action` (String)
-- `ip_end` (String)
-- `ip_start` (String)
-- `name` (String)
-- `site_id` (String)
+- `action` (String) Either ALLOW or BLOCK.
+- `environment_name` (String) The name of the environment that the site belongs to.
+- `ip_start` (String) The start ip address for the rule. When no ipEnd attribute is provided, the rule only applies for the ip provided in ipStart.
+- `name` (String) The name of the rule.
+- `site_id` (String) The ID of the site for which the firewall rule is applied to.
 
 ### Optional
 
-- `enabled` (Boolean)
+- `enabled` (Boolean) Whether or not the rule is enabled. The default value is false.
+- `ip_end` (String) The end ip address for the rule.
 
 ### Read-Only
 
-- `id` (String) The ID of this resource.
+- `id` (String) The unique identifier for the rule.
 
 

@@ -22,7 +22,8 @@ func resourceEnvironment() *schema.Resource {
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
 		},
-		Schema: getEnvironmentSchema(),
+		Schema:      getEnvironmentSchema(),
+		Description: "Environments allow you to manage resources of a specific service and to manage your users' access to them. With environment roles, you have tight control of what a user is allowed to do in your environment. A general use case of environments is to split your resources into different deployment environments (e.g. dev, staging and production). The advantage is that resources of different deployments are isolated from each other and you can restrict user access to your most critical resources.",
 	}
 }
 

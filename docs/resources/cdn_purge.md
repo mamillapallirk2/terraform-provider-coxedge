@@ -3,12 +3,12 @@
 page_title: "coxedge_cdn_purge Resource - terraform-provider-coxedge"
 subcategory: ""
 description: |-
-  
+  Purge all/custom  CDN cached content of a site in a given environment.
 ---
 
 # coxedge_cdn_purge (Resource)
 
-
+Purge all/custom  CDN cached content of a site in a given environment.
 
 
 
@@ -17,13 +17,13 @@ description: |-
 
 ### Required
 
-- `environment_name` (String)
-- `site_id` (String)
+- `environment_name` (String) The name of the environment that the site belongs to.
+- `site_id` (String) A site's unique identifier.
 
 ### Optional
 
-- `items` (Block List) (see [below for nested schema](#nestedblock--items))
-- `purge_type` (String)
+- `items` (Block List) The items to purge from the CDN. (see [below for nested schema](#nestedblock--items))
+- `purge_type` (String) The type of cache purge. Can be URL or PATH. Default value is URL.
 
 ### Read-Only
 
@@ -34,24 +34,24 @@ description: |-
 
 Required:
 
-- `url` (String)
+- `url` (String) The URL or path at which to delete content.
 
 Optional:
 
-- `headers` (List of String)
-- `invalidate_only` (Boolean)
-- `purge_all_dynamic` (Boolean)
-- `purge_selector` (Block List, Max: 1) (see [below for nested schema](#nestedblock--items--purge_selector))
-- `recursive` (Boolean)
+- `headers` (List of String) A list of HTTP request headers used to construct a cache key to purge content by. These headers must be configured in the site configuration's DynamicContent.headerFields property.
+- `invalidate_only` (Boolean) Whether or not to mark the asset as expired and re-validate instead of deleting.
+- `purge_all_dynamic` (Boolean) Whether or not to purge dynamic versions of assets.
+- `purge_selector` (Block List, Max: 1) A key/value pair definition of content to purge from the CDN. (see [below for nested schema](#nestedblock--items--purge_selector))
+- `recursive` (Boolean) Whether or not to recursively delete content from the CDN.
 
 <a id="nestedblock--items--purge_selector"></a>
 ### Nested Schema for `items.purge_selector`
 
 Optional:
 
-- `selector_name` (String)
-- `selector_type` (String)
-- `selector_value` (String)
-- `selector_value_delimiter` (String)
+- `selector_name` (String) The name of the type of content to purge. For example, the name of the HTTP response header. Names are case sensitive.
+- `selector_type` (String) The kinds of content that can be purged from the CDN. One of: HEADER (Purge content based on an HTTP response header), TAG (Purge content based on an X-TAG HTTP header value. Purging by tag can be useful when content on the origin is tagged).
+- `selector_value` (String) The value of the content to purge. For example, the value of the HTTP response header. Values are case sensitive and may be wild-carded, but cannot match a "/".
+- `selector_value_delimiter` (String) The delimiter to separate multiple values with. Defaults to ",".
 
 

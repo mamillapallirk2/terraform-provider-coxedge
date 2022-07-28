@@ -3,12 +3,12 @@
 page_title: "coxedge_delivery_domain Resource - terraform-provider-coxedge"
 subcategory: ""
 description: |-
-  
+  Delivery domains allow the CDN to recognize an HTTP request and associate it with a site.
 ---
 
 # coxedge_delivery_domain (Resource)
 
-
+Delivery domains allow the CDN to recognize an HTTP request and associate it with a site.
 
 
 
@@ -17,12 +17,13 @@ description: |-
 
 ### Required
 
-- `domain` (String)
-- `environment_name` (String)
+- `domain` (String) The site's domain name.
+- `environment_name` (String) The name of the environment that the site belongs to.
+- `site_id` (String) The ID of the site for which to list delivery domains. This parameter is required.
 
 ### Read-Only
 
-- `id` (String) The ID of this resource.
-- `stack_id` (String)
+- `id` (String) The delivery domain unique identifier.
+- `stack_id` (String) The ID of the stack that the site belongs to.
 
 

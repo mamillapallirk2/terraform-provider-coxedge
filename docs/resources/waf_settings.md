@@ -17,35 +17,158 @@ description: |-
 
 ### Required
 
-- `allow_known_bots` (Block List, Min: 1) (see [below for nested schema](#nestedblock--allow_known_bots))
-- `anti_automation_bot_protection` (Block List, Min: 1) (see [below for nested schema](#nestedblock--anti_automation_bot_protection))
-- `behavioral_waf` (Block List, Min: 1) (see [below for nested schema](#nestedblock--behavioral_waf))
-- `cms_protection` (Block List, Min: 1) (see [below for nested schema](#nestedblock--cms_protection))
-- `ddos_settings` (Block List, Min: 1) (see [below for nested schema](#nestedblock--ddos_settings))
-- `environment_name` (String)
-- `owasp_threats` (Block List, Min: 1) (see [below for nested schema](#nestedblock--owasp_threats))
-- `traffic_sources` (Block List, Min: 1) (see [below for nested schema](#nestedblock--traffic_sources))
-- `user_agents` (Block List, Min: 1) (see [below for nested schema](#nestedblock--user_agents))
+- `environment_name` (String) Environment name
+- `site_id` (String)
 
 ### Optional
 
+- `allow_known_bots` (Block List) (see [below for nested schema](#nestedblock--allow_known_bots))
+- `anti_automation_bot_protection` (Block List) (see [below for nested schema](#nestedblock--anti_automation_bot_protection))
 - `api_urls` (List of String)
-- `csrf` (Boolean)
+- `behavioral_waf` (Block List) (see [below for nested schema](#nestedblock--behavioral_waf))
+- `cms_protection` (Block List) (see [below for nested schema](#nestedblock--cms_protection))
+- `ddos_settings` (Block List) (see [below for nested schema](#nestedblock--ddos_settings))
 - `domain` (String)
-- `monitoring_enabled` (Boolean)
-- `spam_and_abuse_form` (Boolean)
+- `general_policies` (Block List) (see [below for nested schema](#nestedblock--general_policies))
+- `monitoring_mode_enabled` (String)
+- `owasp_threats` (Block List) (see [below for nested schema](#nestedblock--owasp_threats))
+- `traffic_sources` (Block List) (see [below for nested schema](#nestedblock--traffic_sources))
 
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-- `site_id` (String)
+- `stack_id` (String)
 
 <a id="nestedblock--allow_known_bots"></a>
 ### Nested Schema for `allow_known_bots`
 
 Optional:
 
-- `internet_archive_bot` (Boolean)
+- `acquia_uptime` (String)
+- `add_search_bot` (String)
+- `adestra_bot` (String)
+- `adjust_servers` (String)
+- `ahrefs_bot` (String)
+- `alerta_bot` (String)
+- `alexa_ia_archiver` (String)
+- `alexa_technologies` (String)
+- `amazon_route_53_health_check_service` (String)
+- `apple_news_bot` (String)
+- `applebot` (String)
+- `ask_jeeves_bot` (String)
+- `audisto_bot` (String)
+- `baidu_spider_bot` (String)
+- `baidu_spider_japan_bot` (String)
+- `binary_canary` (String)
+- `bitbucket_webhook` (String)
+- `blekko_scout_jet_bot` (String)
+- `chrome_compression_proxy` (String)
+- `coccocbot` (String)
+- `cookie_bot` (String)
+- `cybersource` (String)
+- `daumoa_bot` (String)
+- `detectify_scanner` (String)
+- `digi_cert_dcv_bot` (String)
+- `dotmic_dot_bot_commercial` (String)
+- `duck_duck_go_bot` (String)
+- `facebook_external_hit_bot` (String)
+- `feed_press` (String)
+- `feed_wind` (String)
+- `feeder_co` (String)
+- `freshping_monitoring` (String)
+- `geckoboard` (String)
+- `ghost_inspector` (String)
+- `gomez` (String)
+- `goo_japan_bot` (String)
+- `google_ads_bot` (String)
+- `google_bot` (String)
+- `google_cloud_monitoring_bot` (String)
+- `google_feed_fetcher_bot` (String)
+- `google_image_bot` (String)
+- `google_image_proxy` (String)
+- `google_mediapartners_bot` (String)
+- `google_mobile_ads_bot` (String)
+- `google_news_bot` (String)
+- `google_page_speed_insights` (String)
+- `google_structured_data_testing_tool` (String)
+- `google_verification_bot` (String)
+- `google_video_bot` (String)
+- `google_web_light` (String)
+- `grapeshot_bot_commercial` (String)
+- `gree_japan_bot` (String)
+- `hetrix_tools` (String)
+- `hi_pay` (String)
+- `hyperspin_bot` (String)
+- `ias_crawler_commercial` (String)
+- `internet_archive_bot` (String)
+- `j_word_japan_bot` (String)
+- `jetpack_bot` (String)
+- `jike_spider_bot` (String)
+- `kakao_user_agent` (String)
+- `kyoto_tohoku_crawler` (String)
+- `landau_media_spider` (String)
+- `lets_encrypt` (String)
+- `line_japan_bot` (String)
+- `linked_in_bot` (String)
+- `livedoor_japan_bot` (String)
+- `mail_ru_bot` (String)
+- `manage_wp` (String)
+- `microsoft_bing_bot` (String)
+- `microsoft_bing_preview_bot` (String)
+- `microsoft_msn_bot` (String)
+- `microsoft_skype_bot` (String)
+- `mixi_japan_bot` (String)
+- `mobage_japan_bot` (String)
+- `naver_yeti_bot` (String)
+- `new_relic_bot` (String)
+- `ocn_japan_bot` (String)
+- `panopta_bot` (String)
+- `parse_ly_scraper` (String)
+- `pay_pal_ipn` (String)
+- `petal_bot` (String)
+- `pingdom` (String)
+- `pinterest_bot` (String)
+- `qwantify_bot` (String)
+- `roger_bot` (String)
+- `sage_pay` (String)
+- `sectigo_bot` (String)
+- `semrush_bot` (String)
+- `server_density_service_monitoring_bot` (String)
+- `seznam_bot` (String)
+- `shareaholic_bot` (String)
+- `site_24_x_7_bot` (String)
+- `site_lock_spider` (String)
+- `siteimprove_bot` (String)
+- `slack_bot` (String)
+- `sogou_bot` (String)
+- `soso_spider_bot` (String)
+- `spatineo` (String)
+- `spring_bot` (String)
+- `stackify` (String)
+- `status_cake_bot` (String)
+- `stripe` (String)
+- `sucuri_uptime_monitor_bot` (String)
+- `telegram_bot` (String)
+- `testomato_bot` (String)
+- `the_find_crawler` (String)
+- `twitter_bot` (String)
+- `uptime_robot` (String)
+- `vkontakte_external_hit_bot` (String)
+- `w_3_c` (String)
+- `wordfence_central` (String)
+- `workato` (String)
+- `xml_sitemaps` (String)
+- `yahoo_inktomi_slurp_bot` (String)
+- `yahoo_japan_bot` (String)
+- `yahoo_link_preview` (String)
+- `yahoo_seeker_bot` (String)
+- `yahoo_slurp_bot` (String)
+- `yandex_bot` (String)
+- `yisou_spider_commercial` (String)
+- `yodao_bot` (String)
+- `zendesk_bot` (String)
+- `zoho_bot` (String)
+- `zum_bot` (String)
 
 
 <a id="nestedblock--anti_automation_bot_protection"></a>
@@ -53,10 +176,10 @@ Optional:
 
 Optional:
 
-- `anti_scraping` (Boolean)
-- `challenge_automated_clients` (Boolean)
-- `challenge_headless_browsers` (Boolean)
-- `force_browser_validation_on_traffic_anomalies` (Boolean)
+- `anti_scraping` (String)
+- `challenge_automated_clients` (String)
+- `challenge_headless_browsers` (String)
+- `force_browser_validation_on_traffic_anomalies` (String)
 
 
 <a id="nestedblock--behavioral_waf"></a>
@@ -64,11 +187,11 @@ Optional:
 
 Optional:
 
-- `block_probing_and_forced_browsing` (Boolean)
-- `bruteforce_protection` (Boolean)
-- `obfuscated_attacks_and_zeroday_mitigation` (Boolean)
-- `repeated_violations` (Boolean)
-- `spam_protection` (Boolean)
+- `block_probing_and_forced_browsing` (String)
+- `bruteforce_protection` (String)
+- `obfuscated_attacks_and_zeroday_mitigation` (String)
+- `repeated_violations` (String)
+- `spam_protection` (String)
 
 
 <a id="nestedblock--cms_protection"></a>
@@ -76,23 +199,34 @@ Optional:
 
 Optional:
 
-- `whitelist_drupal` (Boolean)
-- `whitelist_joomla` (Boolean)
-- `whitelist_magneto` (Boolean)
-- `whitelist_modx` (Boolean)
-- `whitelist_origin_ip` (Boolean)
-- `whitelist_umbraco` (Boolean)
-- `whitelist_wordpress` (Boolean)
+- `whitelist_drupal` (String)
+- `whitelist_joomla` (String)
+- `whitelist_magento` (String)
+- `whitelist_modx` (String)
+- `whitelist_origin_ip` (String)
+- `whitelist_umbraco` (String)
+- `whitelist_wordpress` (String)
+- `wordpress_waf_ruleset` (String)
 
 
 <a id="nestedblock--ddos_settings"></a>
 ### Nested Schema for `ddos_settings`
 
-Optional:
+Required:
 
 - `burst_threshold` (Number)
 - `global_threshold` (Number)
 - `subsecond_burst_threshold` (Number)
+
+
+<a id="nestedblock--general_policies"></a>
+### Nested Schema for `general_policies`
+
+Optional:
+
+- `block_invalid_user_agents` (String)
+- `block_unknown_user_agents` (String)
+- `http_method_validation` (String)
 
 
 <a id="nestedblock--owasp_threats"></a>
@@ -100,17 +234,23 @@ Optional:
 
 Optional:
 
-- `apache_struts_exploit` (Boolean)
-- `common_web_application_vulnerabilities` (Boolean)
-- `local_file_inclusion` (Boolean)
-- `open_redirect` (Boolean)
-- `remote_file_inclusion` (Boolean)
-- `response_header_injections` (Boolean)
-- `shell_injection` (Boolean)
-- `sql_injection` (Boolean)
-- `webshell_execution_attempt` (Boolean)
-- `wordpress_waf_ruleset` (Boolean)
-- `xss_attack` (Boolean)
+- `apache_struts_exploit` (String)
+- `code_injection` (String)
+- `common_web_application_vulnerabilities` (String)
+- `csrf` (String)
+- `local_file_inclusion` (String)
+- `open_redirect` (String)
+- `personal_identifiable_info` (String)
+- `protocol_attack` (String)
+- `remote_file_inclusion` (String)
+- `sensitive_data_exposure` (String)
+- `serverside_template_injection` (String)
+- `shell_injection` (String)
+- `shell_shock_attack` (String)
+- `sql_injection` (String)
+- `webshell_execution_attempt` (String)
+- `xml_external_entity` (String)
+- `xss_attack` (String)
 
 
 <a id="nestedblock--traffic_sources"></a>
@@ -118,20 +258,13 @@ Optional:
 
 Optional:
 
-- `convicted_bot_traffic` (Boolean)
-- `suspicious_traffic_by_local_ip_format` (Boolean)
-- `via_hosting_services` (Boolean)
-- `via_proxy_networks` (Boolean)
-- `via_tor_nodes` (Boolean)
-- `via_vpn` (Boolean)
-
-
-<a id="nestedblock--user_agents"></a>
-### Nested Schema for `user_agents`
-
-Optional:
-
-- `block_invalid_user_agents` (Boolean)
-- `block_unknown_user_agents` (Boolean)
+- `convicted_bot_traffic` (String)
+- `external_reputation_block_list` (String)
+- `traffic_from_suspicious_nat_ranges` (String)
+- `traffic_via_cdn` (String)
+- `via_hosting_services` (String)
+- `via_proxy_networks` (String)
+- `via_tor_nodes` (String)
+- `via_vpn` (String)
 
 

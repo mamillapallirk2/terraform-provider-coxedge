@@ -26,6 +26,7 @@ description: |-
 ### Optional
 
 - `auth_method` (String)
+- `operation` (String)
 - `password` (String)
 - `username` (String)
 

@@ -17,19 +17,20 @@ description: |-
 
 ### Required
 
-- `domain` (String)
 - `environment_name` (String)
-- `host_header` (String)
-- `origin` (Block List, Min: 1, Max: 1) (see [below for nested schema](#nestedblock--origin))
-- `pull_protocol` (String)
 
 ### Optional
 
 - `backup_origin` (Block List, Max: 1) (see [below for nested schema](#nestedblock--backup_origin))
-- `backup_origin_enabled` (Boolean)
+- `backup_origin_enabled` (String)
 - `backup_origin_exclude_codes` (List of String)
-- `ssl_validation_enabled` (Boolean)
-- `websockets_enabled` (Boolean)
+- `domain` (String)
+- `host_header` (String)
+- `origin` (Block List, Max: 1) (see [below for nested schema](#nestedblock--origin))
+- `pull_protocol` (String)
+- `site_id` (String)
+- `ssl_validation_enabled` (String)
+- `websockets_enabled` (String)
 
 ### Read-Only
 
@@ -37,8 +38,8 @@ description: |-
 - `scope_configuration_id` (String)
 - `stack_id` (String)
 
-<a id="nestedblock--origin"></a>
-### Nested Schema for `origin`
+<a id="nestedblock--backup_origin"></a>
+### Nested Schema for `backup_origin`
 
 Optional:
 
@@ -53,8 +54,8 @@ Read-Only:
 - `id` (String) The ID of this resource.
 
 
-<a id="nestedblock--backup_origin"></a>
-### Nested Schema for `backup_origin`
+<a id="nestedblock--origin"></a>
+### Nested Schema for `origin`
 
 Optional:
 

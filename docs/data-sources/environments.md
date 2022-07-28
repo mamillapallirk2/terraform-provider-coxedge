@@ -17,7 +17,7 @@ description: |-
 
 ### Read-Only
 
-- `environments` (List of Object) (see [below for nested schema](#nestedatt--environments))
+- `environments` (List of Object) Environment descriptions (see [below for nested schema](#nestedatt--environments))
 - `id` (String) The ID of this resource.
 
 <a id="nestedatt--environments"></a>
@@ -28,8 +28,19 @@ Read-Only:
 - `creation_date` (String)
 - `description` (String)
 - `id` (String)
+- `membership` (String)
 - `name` (String)
 - `organization_id` (String)
+- `roles` (List of Object) (see [below for nested schema](#nestedobjatt--environments--roles))
 - `service_connection_id` (String)
+
+<a id="nestedobjatt--environments--roles"></a>
+### Nested Schema for `environments.roles`
+
+Read-Only:
+
+- `is_default` (Boolean)
+- `name` (String)
+- `users` (List of String)
 
 

@@ -23,6 +23,7 @@ func resourceFirewallRule() *schema.Resource {
 			StateContext: schema.ImportStatePassthroughContext,
 		},
 		Schema: getFirewallRuleSchema(),
+		Description: "Deploy and manage Firewall Rules used to control and limit access to your sites.",
 	}
 }
 

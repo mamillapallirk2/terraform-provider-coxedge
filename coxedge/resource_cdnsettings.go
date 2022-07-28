@@ -25,6 +25,7 @@ func resourceCDNSettings() *schema.Resource {
 			StateContext: schema.ImportStatePassthroughContext,
 		},
 		Schema: getCDNSettingsSchema(),
+		Description: "CDN settings for a site in a given environment.",
 	}
 }
 

@@ -18,6 +18,7 @@ description: |-
 ### Required
 
 - `code` (String)
+- `environment_name` (String)
 - `name` (String)
 - `routes` (List of String)
 - `site_id` (String)

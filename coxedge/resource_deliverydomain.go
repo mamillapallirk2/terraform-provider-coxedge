@@ -22,6 +22,7 @@ func resourceDeliveryDomain() *schema.Resource {
 			StateContext: schema.ImportStatePassthroughContext,
 		},
 		Schema: getDeliveryDomainSchema(),
+		Description: "Delivery domains allow the CDN to recognize an HTTP request and associate it with a site.",
 	}
 }
 
