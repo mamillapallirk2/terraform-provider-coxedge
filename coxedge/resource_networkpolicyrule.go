@@ -23,6 +23,7 @@ func resourceNetworkPolicyRule() *schema.Resource {
 			StateContext: schema.ImportStatePassthroughContext,
 		},
 		Schema: getNetworkPolicyRuleSchema(),
+		Description: "Network policy rules allows you to control inbound and outbound traffic to your workload.",
 	}
 }
 

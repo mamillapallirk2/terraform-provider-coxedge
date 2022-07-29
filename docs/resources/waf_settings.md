@@ -3,12 +3,12 @@
 page_title: "coxedge_waf_settings Resource - terraform-provider-coxedge"
 subcategory: ""
 description: |-
-  
+  WAF Settings for a site in a given environment.
 ---
 
 # coxedge_waf_settings (Resource)
 
-
+WAF Settings for a site in a given environment.
 
 
 
@@ -17,27 +17,27 @@ description: |-
 
 ### Required
 
-- `environment_name` (String) Environment name
-- `site_id` (String)
+- `environment_name` (String) The name of the environment that the site belongs to.
+- `site_id` (String) The ID of the site for which the WAF is applied to.
 
 ### Optional
 
-- `allow_known_bots` (Block List) (see [below for nested schema](#nestedblock--allow_known_bots))
-- `anti_automation_bot_protection` (Block List) (see [below for nested schema](#nestedblock--anti_automation_bot_protection))
-- `api_urls` (List of String)
-- `behavioral_waf` (Block List) (see [below for nested schema](#nestedblock--behavioral_waf))
-- `cms_protection` (Block List) (see [below for nested schema](#nestedblock--cms_protection))
-- `ddos_settings` (Block List) (see [below for nested schema](#nestedblock--ddos_settings))
-- `domain` (String)
+- `allow_known_bots` (Block List) An object containing known bots. (see [below for nested schema](#nestedblock--allow_known_bots))
+- `anti_automation_bot_protection` (Block List) Block automated traffic from scanning and browsing your online application. (see [below for nested schema](#nestedblock--anti_automation_bot_protection))
+- `api_urls` (List of String) List of configured API urls.
+- `behavioral_waf` (Block List) Cox's sophisticated user behaviour and reputation analysis rules. (see [below for nested schema](#nestedblock--behavioral_waf))
+- `cms_protection` (Block List) Whitelist admin users. (see [below for nested schema](#nestedblock--cms_protection))
+- `ddos_settings` (Block List) The DDoS Setting containing the different threshold values. (see [below for nested schema](#nestedblock--ddos_settings))
+- `domain` (String) The domain of the site.
 - `general_policies` (Block List) (see [below for nested schema](#nestedblock--general_policies))
-- `monitoring_mode_enabled` (String)
-- `owasp_threats` (Block List) (see [below for nested schema](#nestedblock--owasp_threats))
-- `traffic_sources` (Block List) (see [below for nested schema](#nestedblock--traffic_sources))
+- `monitoring_mode_enabled` (String) If the monitoring mode is enabled.
+- `owasp_threats` (Block List) Cox’s core rule set & OWASP’s most critical Web application security risks. (see [below for nested schema](#nestedblock--owasp_threats))
+- `traffic_sources` (Block List) Real-time threat intelligence for IP addresses, source location, and information on malicious IPs. (see [below for nested schema](#nestedblock--traffic_sources))
 
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-- `stack_id` (String)
+- `stack_id` (String) The ID of the stack that a site belongs to.
 
 <a id="nestedblock--allow_known_bots"></a>
 ### Nested Schema for `allow_known_bots`
@@ -176,10 +176,10 @@ Optional:
 
 Optional:
 
-- `anti_scraping` (String)
-- `challenge_automated_clients` (String)
-- `challenge_headless_browsers` (String)
-- `force_browser_validation_on_traffic_anomalies` (String)
+- `anti_scraping` (String) A more hardened anti-automation policy that is meant to stop scrapers by using faster and harsher convictions.
+- `challenge_automated_clients` (String) Captcha-challenge and block sessions conducted by standard Web browsers if there is evidence that these sessions are being automated and not driven by a human user. Such automation is used primarily for screen scraping and other very targeted, site-specific malicious automation.
+- `challenge_headless_browsers` (String) Challenge requests if the user or device behind them uses an automation tool that initiates browsers but is actually an automation tool without real display—such as phantomJS, Selenium, or other. While such tools are favored by programmers, they are also extremely popular with scrapers, hackers and even in sophisticated DDoS attacks to circumvent standard anti-bot measures.
+- `force_browser_validation_on_traffic_anomalies` (String) Challenge and block requests if the user or device behind them does not keep session cookies and does not execute JavaScripts correctly. Most malicious automated activities (bots) do not meet these conditions and will, therefore, effectively be blocked by the JavaScript challenge triggered in any suspected situation. Clients can also be blocked depending on whether they act in an abnormal to the specific domain—by scraping content in a way that most sessions on this domain don't—or clients that try to, for example, avoid detection by switching IPs.
 
 
 <a id="nestedblock--behavioral_waf"></a>
@@ -187,11 +187,11 @@ Optional:
 
 Optional:
 
-- `block_probing_and_forced_browsing` (String)
-- `bruteforce_protection` (String)
-- `obfuscated_attacks_and_zeroday_mitigation` (String)
-- `repeated_violations` (String)
-- `spam_protection` (String)
+- `block_probing_and_forced_browsing` (String) Challenge or block sessions and users that seem to make brute-forced requests on random URLs seeking to discover a Web application's structure and hidden directories.
+- `bruteforce_protection` (String) Challenge and block attempts seeking to guess user names and passwords on Web login forms.
+- `obfuscated_attacks_and_zeroday_mitigation` (String) Block clients performing multiple injection attacks.
+- `repeated_violations` (String) Challenge or block clients that failed to answer previous challenges.
+- `spam_protection` (String) Challenge and block user sessions and activities that seem to be aggressively using forms on your website to post spam content, generate new accounts, and more. Also, require a handshake (if not already provided) to clients making POST requests.
 
 
 <a id="nestedblock--cms_protection"></a>
@@ -199,13 +199,13 @@ Optional:
 
 Optional:
 
-- `whitelist_drupal` (String)
-- `whitelist_joomla` (String)
-- `whitelist_magento` (String)
-- `whitelist_modx` (String)
-- `whitelist_origin_ip` (String)
-- `whitelist_umbraco` (String)
-- `whitelist_wordpress` (String)
+- `whitelist_drupal` (String) Enable whitelist Drupal admin logged-in users.
+- `whitelist_joomla` (String) Enable whitelist Joomla admin logged-in users.
+- `whitelist_magento` (String) Enable whitelist Magento admin logged-in users.
+- `whitelist_modx` (String) Enable whitelist MODX admin logged-in users.
+- `whitelist_origin_ip` (String) Enable this policy to whitelist requests coming from the origin for plugin updates and general CMS updates
+- `whitelist_umbraco` (String) Enable whitelist Umbraco admin logged-in users.
+- `whitelist_wordpress` (String) Enable whitelist WordPress admin logged-in users.
 - `wordpress_waf_ruleset` (String)
 
 
@@ -214,9 +214,9 @@ Optional:
 
 Required:
 
-- `burst_threshold` (Number)
-- `global_threshold` (Number)
-- `subsecond_burst_threshold` (Number)
+- `burst_threshold` (Number) The number of requests per two seconds that can trigger DDoS protection.
+- `global_threshold` (Number) The number of overall requests per ten seconds that can trigger DDoS protection.
+- `subsecond_burst_threshold` (Number) The number of requests per 0.1 seconds that can trigger DDoS protection.
 
 
 <a id="nestedblock--general_policies"></a>
@@ -234,23 +234,23 @@ Optional:
 
 Optional:
 
-- `apache_struts_exploit` (String)
+- `apache_struts_exploit` (String) Patch known vulnerabilities in the Apache Struts framework by blocking requests suspected of exploiting these vulnerabilities.
 - `code_injection` (String)
-- `common_web_application_vulnerabilities` (String)
-- `csrf` (String)
-- `local_file_inclusion` (String)
-- `open_redirect` (String)
+- `common_web_application_vulnerabilities` (String) Block attempts to access and potentially harm your servers through common backdoors, such as common control panels, configuration scripts etc. which may be accessible to unwanted users.
+- `csrf` (String) Cox WAF will generate a CSRF token that is added to forms. Requests without a valid CSRF token will be blocked.
+- `local_file_inclusion` (String) Block requests suspected of a Local File Inclusion attempt. Local File Inclusion attempts seek to exploit vulnerabilities in a Web application to execute potentially harmful scripts on your servers.
+- `open_redirect` (String) Block requests suspected of being an Open Redirect attempt. Open Redirect attempts to exploit vulnerabilities in a Web application to redirect a user to a new website without any validation of the target of redirect.
 - `personal_identifiable_info` (String)
 - `protocol_attack` (String)
-- `remote_file_inclusion` (String)
+- `remote_file_inclusion` (String) Block requests suspected of being a Remote File Inclusion attempt. Remote File Inclusion attempts to exploit vulnerabilities in a Web application (typically in PHP) to execute a script from a 3rd party server. RFI attacks provide a backdoor for the hacker to change the behaviour of a server and Web application.
 - `sensitive_data_exposure` (String)
 - `serverside_template_injection` (String)
-- `shell_injection` (String)
-- `shell_shock_attack` (String)
-- `sql_injection` (String)
-- `webshell_execution_attempt` (String)
+- `shell_injection` (String) Block requests suspected of being a shell injection attack attempt. Shell Injection is an attack in which the goal is execution of arbitrary commands on the host operating system via a vulnerable application. Command injection attacks are possible when an application passes unsafe user supplied data (forms, cookies, HTTP headers etc.) to a system shell.
+- `shell_shock_attack` (String) Block requests suspected of being a Shellshock attack attempt. A Shellshock attack is an attempt to exploit a server's vulnerabilities to gain full access and control over them. A successful attack would typically either abuse a server's resources or hack the website.
+- `sql_injection` (String) Block requests suspected of being a SQL injection attack attempt. SQL injection attacks attempt to exploit vulnerabilities in a Web application's code and seek to gain access and control over the database. A successful attack would typically result in stolen data or the site being defaced or taken down.
+- `webshell_execution_attempt` (String) Block requests suspected of Web shell attempts. A Web shell is a script that can be uploaded to a Web server to enable remote administration of the machine. Infected Web servers can either be internet-facing or internal to the network, where the Web shell is used to further pivot to internal hosts.
 - `xml_external_entity` (String)
-- `xss_attack` (String)
+- `xss_attack` (String) Block requests suspected of being a Cross-Site-Scripting attack attempt. Cross Site Scripting attacks attempt to exploit vulnerabilities in a Web application and seek to inject a client side script either across an entire site or to a specific user's session. A successful attack would typically allow forbidden access to a user's actions and data.
 
 
 <a id="nestedblock--traffic_sources"></a>
@@ -258,13 +258,13 @@ Optional:
 
 Optional:
 
-- `convicted_bot_traffic` (String)
+- `convicted_bot_traffic` (String) Challenge traffic from IP addresses that have been convicted of automated activities (bots) on this site or on others. These IP addresses are used by malicious automated agents while no legitimate traffic has been observed on them.
 - `external_reputation_block_list` (String)
-- `traffic_from_suspicious_nat_ranges` (String)
+- `traffic_from_suspicious_nat_ranges` (String) Challenge traffic from suspicious NAT ranges.
 - `traffic_via_cdn` (String)
-- `via_hosting_services` (String)
-- `via_proxy_networks` (String)
-- `via_tor_nodes` (String)
-- `via_vpn` (String)
+- `via_hosting_services` (String) Challenge traffic from IP addresses known to be of hosting service companies. This rule is unlikely to see legitimate human traffic on these IP spaces since they are typically used for server hosting. In most cases, traffic from these IP spaces originate from infected servers that are controlled by hackers.
+- `via_proxy_networks` (String) Challenge traffic from any known proxy network to block bots and known bad devices. While proxy services are used sometimes purely for Web anonymity, they are also commonly used by hackers, scrapers, and spammers to crawl or hack Web applications.
+- `via_tor_nodes` (String) Challenge traffic from The Onion Ring exit nodes to block bots and known bad devices. While TOR is used sometimes purely for Web anonymity, it is commonly used by hackers, scrapers, and spammers to crawl or hack Web applications.
+- `via_vpn` (String) Challenge traffic from any known VPN to block bots and known bad devices. While VPNs are sometimes used purely for Web anonymity, they are also commonly used by hackers, scrapers, and spammers to crawl or hack Web applications.
 
 

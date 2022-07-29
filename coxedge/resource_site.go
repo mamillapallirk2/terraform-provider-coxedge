@@ -23,6 +23,7 @@ func resourceSite() *schema.Resource {
 			StateContext: schema.ImportStatePassthroughContext,
 		},
 		Schema: getSiteSchema(),
+		Description: "Create and manage your CDN, WAF, and/or Serverless Scripting Delivery sites.",
 	}
 }
 

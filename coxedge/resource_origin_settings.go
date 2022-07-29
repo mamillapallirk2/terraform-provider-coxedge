@@ -26,6 +26,7 @@ func resourceOriginSettings() *schema.Resource {
 			StateContext: schema.ImportStatePassthroughContext,
 		},
 		Schema: getOriginSettingsSchema(),
+		Description: "Origin settings for a site in a given environment.",
 	}
 }
 

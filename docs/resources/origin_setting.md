@@ -3,12 +3,12 @@
 page_title: "coxedge_origin_setting Resource - terraform-provider-coxedge"
 subcategory: ""
 description: |-
-  
+  Origin settings for a site in a given environment.
 ---
 
 # coxedge_origin_setting (Resource)
 
-
+Origin settings for a site in a given environment.
 
 
 
@@ -17,41 +17,41 @@ description: |-
 
 ### Required
 
-- `environment_name` (String)
+- `environment_name` (String) The name of the environment that the site belongs to.
 
 ### Optional
 
-- `backup_origin` (Block List, Max: 1) (see [below for nested schema](#nestedblock--backup_origin))
-- `backup_origin_enabled` (String)
-- `backup_origin_exclude_codes` (List of String)
-- `domain` (String)
-- `host_header` (String)
-- `origin` (Block List, Max: 1) (see [below for nested schema](#nestedblock--origin))
-- `pull_protocol` (String)
-- `site_id` (String)
-- `ssl_validation_enabled` (String)
-- `websockets_enabled` (String)
+- `backup_origin` (Block List, Max: 1) The secondary origin that the CDN uses to pull content from when the primary origin is not available. (see [below for nested schema](#nestedblock--backup_origin))
+- `backup_origin_enabled` (String) Specifies if a backup origin for the site is configured.
+- `backup_origin_exclude_codes` (List of String) Requests are made to the backup origin on any 4xx or 5xx response codes returned from the primary origin. This property specifies the response status codes for which calls to the backup origin must not be made. Multiple response codes can be excluded. e.g: ["410", "411", "412"]. Asterisks can be used to cover a range of codes. e.g. All the 4xx codes can be covered using "4*".
+- `domain` (String) The domain of the site.
+- `host_header` (String) The host header to be used to pull content from the origin. "Dynamic" refers to using the requested domain name (Host: %client.request.host%) as the host header.
+- `origin` (Block List, Max: 1) The primary origin that the CDN uses to pull content from. (see [below for nested schema](#nestedblock--origin))
+- `pull_protocol` (String) The type of protocol used to pull content from the origin. Must be one of ["HTTP", "HTTPS", "MATCH"]. "MATCH" is equivalent to "HTTP or HTTPS".
+- `site_id` (String) A site's unique identifier.
+- `ssl_validation_enabled` (String) Specifies if SSL validation for the origins is enabled.
+- `websockets_enabled` (String) Specifies if web socket connections to the origin server are enabled.
 
 ### Read-Only
 
 - `id` (String) The ID of this resource.
-- `scope_configuration_id` (String)
-- `stack_id` (String)
+- `scope_configuration_id` (String) The ID of the scope of the site that the origins are connected to.
+- `stack_id` (String) The ID of the stack that a site belongs to.
 
 <a id="nestedblock--backup_origin"></a>
 ### Nested Schema for `backup_origin`
 
 Optional:
 
-- `address` (String)
-- `auth_method` (String)
-- `common_certificate_name` (String)
-- `password` (String)
-- `username` (String)
+- `address` (String) The address of the primary origin that the CDN uses to pull content from. Can be a valid IPv4 address or a valid domain name. It may include a specific port and a precise path as well (e.g. 199.250.204.212:80/test). Port must be one of [80, 8080, 443, 1935, 9091].
+- `auth_method` (String) Specifies the authentication method that the origin uses. Must be one of ["NONE", "BASIC"].
+- `common_certificate_name` (String) Common name to validate SSL origin requests against.
+- `password` (String) Password to use when authenticating with the origin.
+- `username` (String) Username to use when authenticating with the origin.
 
 Read-Only:
 
-- `id` (String) The ID of this resource.
+- `id` (String) An origin's unique identifier.
 
 
 <a id="nestedblock--origin"></a>
@@ -59,14 +59,14 @@ Read-Only:
 
 Optional:
 
-- `address` (String)
-- `auth_method` (String)
-- `common_certificate_name` (String)
-- `password` (String)
-- `username` (String)
+- `address` (String) The address of the primary origin that the CDN uses to pull content from. Can be a valid IPv4 address or a valid domain name. It may include a specific port and a precise path as well (e.g. 199.250.204.212:80/test). Port must be one of [80, 8080, 443, 1935, 9091].
+- `auth_method` (String) Specifies the authentication method that the origin uses. Must be one of ["NONE", "BASIC"].
+- `common_certificate_name` (String) Common name to validate SSL origin requests against.
+- `password` (String) Password to use when authenticating with the origin.
+- `username` (String) Username to use when authenticating with the origin.
 
 Read-Only:
 
-- `id` (String) The ID of this resource.
+- `id` (String) An origin's unique identifier.
 
 

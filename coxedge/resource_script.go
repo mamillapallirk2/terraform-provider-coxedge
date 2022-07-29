@@ -24,6 +24,7 @@ func resourceScript() *schema.Resource {
 			StateContext: schema.ImportStatePassthroughContext,
 		},
 		Schema: getScriptSchema(),
+		Description: "Deploy and manage Serverless Scripts used to interact with requests made to the site.",
 	}
 }
 

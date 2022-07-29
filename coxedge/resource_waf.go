@@ -26,6 +26,7 @@ func resourceWAFSettings() *schema.Resource {
 			StateContext: schema.ImportStatePassthroughContext,
 		},
 		Schema: getWAFSettingsSchema(),
+		Description: "WAF Settings for a site in a given environment.",
 	}
 }
 

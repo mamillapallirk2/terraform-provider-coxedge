@@ -3,12 +3,12 @@
 page_title: "coxedge_site Resource - terraform-provider-coxedge"
 subcategory: ""
 description: |-
-  
+  Create and manage your CDN, WAF, and/or Serverless Scripting Delivery sites.
 ---
 
 # coxedge_site (Resource)
 
-
+Create and manage your CDN, WAF, and/or Serverless Scripting Delivery sites.
 
 
 
@@ -17,27 +17,27 @@ description: |-
 
 ### Required
 
-- `domain` (String)
-- `environment_name` (String)
-- `hostname` (String)
-- `protocol` (String)
-- `services` (List of String)
+- `domain` (String) The domain name that will be used for the site.
+- `environment_name` (String) The name of the environment that the site belongs to.
+- `hostname` (String) The hostname to that will be used to get the information from. The hostname can be an IP or a name. It may include a specific port and a precise path as well (e.g. 199.250.204.212:80/test).
+- `protocol` (String) Protocol that will be used to communicate with the hostname. Possibles values are HTTP or HTTPS.
+- `services` (List of String) Services list that will be used on the site. Possibles values are CDN,SERVERLESS_EDGE_ENGINE or WAF.
 
 ### Optional
 
-- `auth_method` (String)
-- `operation` (String)
-- `password` (String)
-- `username` (String)
+- `auth_method` (String) The authentication method to communicate with the hostname. Possibles values are NONE or BASIC. If not provided, it will default to NONE unless the username or password is provided. It would then default to BASIC.
+- `operation` (String) To enable or disable CDN, WAF and Serverless Scripts. Required values: CDN -> enable_cdn/disable_cdn, WAF -> enable_waf/disable_waf, Serverless Scripts -> enable_scripts/disable_scripts
+- `password` (String) The password for the basic authentication. Required if authMethod is BASIC or if the password id provided.
+- `username` (String) The username for the basic authentication. Required if authMethod is BASIC or if the password id provided.
 
 ### Read-Only
 
-- `anycast_ip` (String)
-- `delivery_domains` (List of Object) (see [below for nested schema](#nestedatt--delivery_domains))
-- `edge_address` (String)
-- `id` (String) The ID of this resource.
-- `stack_id` (String)
-- `status` (String)
+- `anycast_ip` (String) The Anycast IP address that domains should be pointed to.
+- `delivery_domains` (List of Object) List of delivery domains of the site. (see [below for nested schema](#nestedatt--delivery_domains))
+- `edge_address` (String) The edge address of the site.
+- `id` (String) A sites's unique identifier.
+- `stack_id` (String) The ID of the stack that a site belongs to.
+- `status` (String) The status of the site. It can either be ACTIVE, PENDING, or PROVISIONING.
 
 <a id="nestedatt--delivery_domains"></a>
 ### Nested Schema for `delivery_domains`

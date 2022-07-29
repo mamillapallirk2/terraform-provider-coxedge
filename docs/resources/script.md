@@ -3,12 +3,12 @@
 page_title: "coxedge_script Resource - terraform-provider-coxedge"
 subcategory: ""
 description: |-
-  
+  Deploy and manage Serverless Scripts used to interact with requests made to the site.
 ---
 
 # coxedge_script (Resource)
 
-
+Deploy and manage Serverless Scripts used to interact with requests made to the site.
 
 
 
@@ -17,18 +17,18 @@ description: |-
 
 ### Required
 
-- `code` (String)
-- `environment_name` (String)
-- `name` (String)
-- `routes` (List of String)
-- `site_id` (String)
+- `code` (String) The JavaScript code used for the script.
+- `environment_name` (String) The name of the environment that the site belongs to.
+- `name` (String) The name of the script.
+- `routes` (List of String) The routes that incoming requests should respond with a script.
+- `site_id` (String) The ID of the site that the script belongs to.
 
 ### Read-Only
 
-- `created_at` (String)
-- `id` (String) The ID of this resource.
-- `stack_id` (String)
-- `updated_at` (String)
-- `version` (String)
+- `created_at` (String) Creation timestamp of the script.
+- `id` (String) The unique identifier for the script.
+- `stack_id` (String) The ID of the stack that the script belongs to.
+- `updated_at` (String) The date on which the script was last updated.
+- `version` (String) The version number of the script.
 
 

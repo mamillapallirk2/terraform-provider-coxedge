@@ -3,12 +3,12 @@
 page_title: "coxedge_network_policy_rule Resource - terraform-provider-coxedge"
 subcategory: ""
 description: |-
-  
+  Network policy rules allows you to control inbound and outbound traffic to your workload.
 ---
 
 # coxedge_network_policy_rule (Resource)
 
-
+Network policy rules allows you to control inbound and outbound traffic to your workload.
 
 
 
@@ -17,22 +17,22 @@ description: |-
 
 ### Required
 
-- `action` (String)
-- `environment_name` (String)
-- `port_range` (String)
-- `protocol` (String)
-- `source` (String)
-- `type` (String)
-- `workload_id` (String)
+- `action` (String) The network policy rule action: ALLOW (allow traffic) or BLOCK (deny traffic).
+- `environment_name` (String) The name of the environment that the site belongs to.
+- `port_range` (String) This specifies on which ports traffic will be allowed or denied by this rule. It can be a range of ports separated by a hyphen.
+- `protocol` (String) Supported protocols are: TCP, UDP, TCP_UDP, ESP, AH, ICMP or GRE.
+- `source` (String) A subnet that will define all the IPs allowed or denied by this rule.
+- `type` (String) The type of network policy rule, either INBOUND or OUTBOUND.
+- `workload_id` (String) The UUID of the workload to which the network policy rule is applied. Corresponds to the first workload ID in the network policy's list of instance selectors.
 
 ### Optional
 
-- `description` (String)
+- `description` (String) A summary of what this rule does or a name of this rule. It is highly recommended to give a unique description to easily identify a rule.
 
 ### Read-Only
 
-- `id` (String) The ID of this resource.
-- `network_policy_id` (String)
-- `stack_id` (String)
+- `id` (String) The ID of the network policy rule, in the form networkProfileId/type/hashCode/occurrence.
+- `network_policy_id` (String) The UUID of the network policy to which the network policy rule belongs.
+- `stack_id` (String) The UUID of the stack to which the network policy belongs.
 
 

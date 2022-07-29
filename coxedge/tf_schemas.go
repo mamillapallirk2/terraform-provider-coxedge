@@ -557,48 +557,59 @@ func getImageSetSchema() map[string]*schema.Schema {
 func getNetworkPolicyRuleSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The ID of the network policy rule, in the form networkProfileId/type/hashCode/occurrence.",
 		},
 		"stack_id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The UUID of the stack to which the network policy belongs.",
 		},
 		"environment_name": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The name of the environment that the site belongs to.",
 		},
 		"workload_id": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The UUID of the workload to which the network policy rule is applied. Corresponds to the first workload ID in the network policy's list of instance selectors.",
 		},
 		"network_policy_id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The UUID of the network policy to which the network policy rule belongs.",
 		},
 		"description": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "A summary of what this rule does or a name of this rule. It is highly recommended to give a unique description to easily identify a rule.",
 		},
 		"type": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The type of network policy rule, either INBOUND or OUTBOUND.",
 		},
 		"source": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "A subnet that will define all the IPs allowed or denied by this rule.",
 		},
 		"action": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The network policy rule action: ALLOW (allow traffic) or BLOCK (deny traffic).",
 		},
 		"protocol": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "Supported protocols are: TCP, UDP, TCP_UDP, ESP, AH, ICMP or GRE.",
 		},
 		"port_range": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "This specifies on which ports traffic will be allowed or denied by this rule. It can be a range of ports separated by a hyphen.",
 		},
 	}
 }
@@ -606,43 +617,52 @@ func getNetworkPolicyRuleSchema() map[string]*schema.Schema {
 func getSiteSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"environment_name": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The name of the environment that the site belongs to.",
 		},
 		"services": {
 			Type: schema.TypeList,
 			Elem: &schema.Schema{
 				Type: schema.TypeString,
 			},
-			Required: true,
+			Required:    true,
+			Description: "Services list that will be used on the site. Possibles values are CDN,SERVERLESS_EDGE_ENGINE or WAF.",
 		},
 		"protocol": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "Protocol that will be used to communicate with the hostname. Possibles values are HTTP or HTTPS.",
 		},
 		"domain": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The domain name that will be used for the site.",
 		},
 		"hostname": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The hostname to that will be used to get the information from. The hostname can be an IP or a name. It may include a specific port and a precise path as well (e.g. 199.250.204.212:80/test).",
 		},
 		"auth_method": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The authentication method to communicate with the hostname. Possibles values are NONE or BASIC. If not provided, it will default to NONE unless the username or password is provided. It would then default to BASIC.",
 		},
 		"username": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The username for the basic authentication. Required if authMethod is BASIC or if the password id provided.",
 		},
 		"password": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The password for the basic authentication. Required if authMethod is BASIC or if the password id provided.",
 		},
 		"operation": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "To enable or disable CDN, WAF and Serverless Scripts. Required values: CDN -> enable_cdn/disable_cdn, WAF -> enable_waf/disable_waf, Serverless Scripts -> enable_scripts/disable_scripts",
 			ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 				var diags diag.Diagnostics
 				value := i.(string)
@@ -680,39 +700,47 @@ func getSiteSchema() map[string]*schema.Schema {
 		},
 		//Computed properties
 		"id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "A sites's unique identifier.",
 		},
 		"stack_id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The ID of the stack that a site belongs to.",
 		},
 		"status": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The status of the site. It can either be ACTIVE, PENDING, or PROVISIONING.",
 		},
 		"edge_address": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The edge address of the site.",
 		},
 		"anycast_ip": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The Anycast IP address that domains should be pointed to.",
 		},
 		"delivery_domains": {
-			Type:     schema.TypeList,
-			Computed: true,
+			Type:        schema.TypeList,
+			Computed:    true,
+			Description: "List of delivery domains of the site.",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"domain": {
-						Type:     schema.TypeString,
-						Computed: true,
-						ForceNew: true,
+						Type:        schema.TypeString,
+						Computed:    true,
+						Description: "A delivery domain of the site.",
+						ForceNew:    true,
 					},
 					"validated_at": {
-						Type:     schema.TypeString,
-						Computed: true,
-						ForceNew: true,
+						Type:        schema.TypeString,
+						Computed:    true,
+						Description: "The date the domain was validated to be pointing to Cox.",
+						ForceNew:    true,
 					},
 				},
 			},
@@ -743,28 +771,34 @@ func getOriginSettingSetSchema() map[string]*schema.Schema {
 func getOriginSettingOriginSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "An origin's unique identifier.",
 		},
 		"address": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The address of the primary origin that the CDN uses to pull content from. Can be a valid IPv4 address or a valid domain name. It may include a specific port and a precise path as well (e.g. 199.250.204.212:80/test). Port must be one of [80, 8080, 443, 1935, 9091].",
 		},
 		"common_certificate_name": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Common name to validate SSL origin requests against.",
 		},
 		"auth_method": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Specifies the authentication method that the origin uses. Must be one of [\"NONE\", \"BASIC\"].",
 		},
 		"username": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Username to use when authenticating with the origin.",
 		},
 		"password": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Password to use when authenticating with the origin.",
 		},
 	}
 }
@@ -777,28 +811,34 @@ func getOriginSettingsSchema() map[string]*schema.Schema {
 			Optional: true,
 		},
 		"site_id": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "A site's unique identifier.",
 		},
 		"stack_id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The ID of the stack that a site belongs to.",
 		},
 		"scope_configuration_id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The ID of the scope of the site that the origins are connected to.",
 		},
 		"environment_name": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The name of the environment that the site belongs to.",
 		},
 		"domain": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The domain of the site.",
 		},
 		"websockets_enabled": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Specifies if web socket connections to the origin server are enabled.",
 			ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 				var diags diag.Diagnostics
 				value := i.(string)
@@ -815,8 +855,9 @@ func getOriginSettingsSchema() map[string]*schema.Schema {
 			},
 		},
 		"ssl_validation_enabled": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Specifies if SSL validation for the origins is enabled.",
 			ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 				var diags diag.Diagnostics
 				value := i.(string)
@@ -833,12 +874,14 @@ func getOriginSettingsSchema() map[string]*schema.Schema {
 			},
 		},
 		"pull_protocol": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The type of protocol used to pull content from the origin. Must be one of [\"HTTP\", \"HTTPS\", \"MATCH\"]. \"MATCH\" is equivalent to \"HTTP or HTTPS\".",
 		},
 		"host_header": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The host header to be used to pull content from the origin. \"Dynamic\" refers to using the requested domain name (Host: %client.request.host%) as the host header.",
 		},
 		"origin": {
 			Type:     schema.TypeList,
@@ -846,11 +889,13 @@ func getOriginSettingsSchema() map[string]*schema.Schema {
 			Elem: &schema.Resource{
 				Schema: getOriginSettingOriginSchema(),
 			},
-			Optional: true,
+			Optional:    true,
+			Description: "The primary origin that the CDN uses to pull content from.",
 		},
 		"backup_origin_enabled": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "Specifies if a backup origin for the site is configured.",
 			ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 				var diags diag.Diagnostics
 				value := i.(string)
@@ -872,14 +917,16 @@ func getOriginSettingsSchema() map[string]*schema.Schema {
 			Elem: &schema.Resource{
 				Schema: getOriginSettingOriginSchema(),
 			},
-			Optional: true,
+			Optional:    true,
+			Description: "The secondary origin that the CDN uses to pull content from when the primary origin is not available.",
 		},
 		"backup_origin_exclude_codes": {
 			Type: schema.TypeList,
 			Elem: &schema.Schema{
 				Type: schema.TypeString,
 			},
-			Optional: true,
+			Optional:    true,
+			Description: "Requests are made to the backup origin on any 4xx or 5xx response codes returned from the primary origin. This property specifies the response status codes for which calls to the backup origin must not be made. Multiple response codes can be excluded. e.g: [\"410\", \"411\", \"412\"]. Asterisks can be used to cover a range of codes. e.g. All the 4xx codes can be covered using \"4*\".",
 		},
 	}
 }
@@ -1272,19 +1319,22 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 		"environment_name": {
 			Type:        schema.TypeString,
 			Required:    true,
-			Description: "Environment name ",
+			Description: "The name of the environment that the site belongs to.",
 		},
 		"site_id": {
 			Type:     schema.TypeString,
 			Required: true,
+			Description: "The ID of the site for which the WAF is applied to.",
 		},
 		"stack_id": {
 			Type:     schema.TypeString,
 			Computed: true,
+			Description: "The ID of the stack that a site belongs to.",
 		},
 		"domain": {
 			Type:     schema.TypeString,
 			Optional: true,
+			Description: "The domain of the site.",
 		},
 		"api_urls": {
 			Type: schema.TypeList,
@@ -1292,23 +1342,28 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 				Type: schema.TypeString,
 			},
 			Optional: true,
+			Description: "List of configured API urls.",
 		},
 		"ddos_settings": {
 			Type:     schema.TypeList,
 			Optional: true,
+			Description: "The DDoS Setting containing the different threshold values.",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"global_threshold": {
 						Type:     schema.TypeInt,
 						Required: true,
+						Description: "The number of overall requests per ten seconds that can trigger DDoS protection.",
 					},
 					"burst_threshold": {
 						Type:     schema.TypeInt,
 						Required: true,
+						Description: "The number of requests per two seconds that can trigger DDoS protection.",
 					},
 					"subsecond_burst_threshold": {
 						Type:     schema.TypeInt,
 						Required: true,
+						Description: "The number of requests per 0.1 seconds that can trigger DDoS protection.",
 					},
 				},
 			},
@@ -1316,6 +1371,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 		"monitoring_mode_enabled": {
 			Type:     schema.TypeString,
 			Optional: true,
+			Description: "If the monitoring mode is enabled.",
 			ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 				var diags diag.Diagnostics
 				value := i.(string)
@@ -1334,11 +1390,13 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 		"owasp_threats": {
 			Type:     schema.TypeList,
 			Optional: true,
+			Description: "Cox’s core rule set & OWASP’s most critical Web application security risks.",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"sql_injection": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Block requests suspected of being a SQL injection attack attempt. SQL injection attacks attempt to exploit vulnerabilities in a Web application's code and seek to gain access and control over the database. A successful attack would typically result in stolen data or the site being defaced or taken down.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1357,6 +1415,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"xss_attack": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Block requests suspected of being a Cross-Site-Scripting attack attempt. Cross Site Scripting attacks attempt to exploit vulnerabilities in a Web application and seek to inject a client side script either across an entire site or to a specific user's session. A successful attack would typically allow forbidden access to a user's actions and data.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1375,6 +1434,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"shell_shock_attack": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Block requests suspected of being a Shellshock attack attempt. A Shellshock attack is an attempt to exploit a server's vulnerabilities to gain full access and control over them. A successful attack would typically either abuse a server's resources or hack the website.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1393,6 +1453,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"remote_file_inclusion": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Block requests suspected of being a Remote File Inclusion attempt. Remote File Inclusion attempts to exploit vulnerabilities in a Web application (typically in PHP) to execute a script from a 3rd party server. RFI attacks provide a backdoor for the hacker to change the behaviour of a server and Web application.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1411,6 +1472,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"apache_struts_exploit": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Patch known vulnerabilities in the Apache Struts framework by blocking requests suspected of exploiting these vulnerabilities.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1429,6 +1491,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"local_file_inclusion": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Block requests suspected of a Local File Inclusion attempt. Local File Inclusion attempts seek to exploit vulnerabilities in a Web application to execute potentially harmful scripts on your servers.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1447,6 +1510,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"common_web_application_vulnerabilities": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Block attempts to access and potentially harm your servers through common backdoors, such as common control panels, configuration scripts etc. which may be accessible to unwanted users.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1465,6 +1529,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"webshell_execution_attempt": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Block requests suspected of Web shell attempts. A Web shell is a script that can be uploaded to a Web server to enable remote administration of the machine. Infected Web servers can either be internet-facing or internal to the network, where the Web shell is used to further pivot to internal hosts.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1501,6 +1566,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"csrf": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Cox WAF will generate a CSRF token that is added to forms. Requests without a valid CSRF token will be blocked.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1519,6 +1585,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"open_redirect": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Block requests suspected of being an Open Redirect attempt. Open Redirect attempts to exploit vulnerabilities in a Web application to redirect a user to a new website without any validation of the target of redirect.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1537,6 +1604,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"shell_injection": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Block requests suspected of being a shell injection attack attempt. Shell Injection is an attack in which the goal is execution of arbitrary commands on the host operating system via a vulnerable application. Command injection attacks are possible when an application passes unsafe user supplied data (forms, cookies, HTTP headers etc.) to a system shell.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1710,11 +1778,13 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 		"traffic_sources": {
 			Type:     schema.TypeList,
 			Optional: true,
+			Description: "Real-time threat intelligence for IP addresses, source location, and information on malicious IPs.",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"via_tor_nodes": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Challenge traffic from The Onion Ring exit nodes to block bots and known bad devices. While TOR is used sometimes purely for Web anonymity, it is commonly used by hackers, scrapers, and spammers to crawl or hack Web applications.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1733,6 +1803,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"via_proxy_networks": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Challenge traffic from any known proxy network to block bots and known bad devices. While proxy services are used sometimes purely for Web anonymity, they are also commonly used by hackers, scrapers, and spammers to crawl or hack Web applications.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1751,6 +1822,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"via_hosting_services": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Challenge traffic from IP addresses known to be of hosting service companies. This rule is unlikely to see legitimate human traffic on these IP spaces since they are typically used for server hosting. In most cases, traffic from these IP spaces originate from infected servers that are controlled by hackers.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1769,6 +1841,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"via_vpn": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Challenge traffic from any known VPN to block bots and known bad devices. While VPNs are sometimes used purely for Web anonymity, they are also commonly used by hackers, scrapers, and spammers to crawl or hack Web applications.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1787,6 +1860,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"convicted_bot_traffic": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Challenge traffic from IP addresses that have been convicted of automated activities (bots) on this site or on others. These IP addresses are used by malicious automated agents while no legitimate traffic has been observed on them.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1805,6 +1879,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"traffic_from_suspicious_nat_ranges": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Challenge traffic from suspicious NAT ranges.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1862,11 +1937,13 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 		"anti_automation_bot_protection": {
 			Type:     schema.TypeList,
 			Optional: true,
+			Description: "Block automated traffic from scanning and browsing your online application.",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"force_browser_validation_on_traffic_anomalies": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Challenge and block requests if the user or device behind them does not keep session cookies and does not execute JavaScripts correctly. Most malicious automated activities (bots) do not meet these conditions and will, therefore, effectively be blocked by the JavaScript challenge triggered in any suspected situation. Clients can also be blocked depending on whether they act in an abnormal to the specific domain—by scraping content in a way that most sessions on this domain don't—or clients that try to, for example, avoid detection by switching IPs.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1885,6 +1962,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"challenge_automated_clients": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Captcha-challenge and block sessions conducted by standard Web browsers if there is evidence that these sessions are being automated and not driven by a human user. Such automation is used primarily for screen scraping and other very targeted, site-specific malicious automation.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1903,6 +1981,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"challenge_headless_browsers": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Challenge requests if the user or device behind them uses an automation tool that initiates browsers but is actually an automation tool without real display—such as phantomJS, Selenium, or other. While such tools are favored by programmers, they are also extremely popular with scrapers, hackers and even in sophisticated DDoS attacks to circumvent standard anti-bot measures.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1921,6 +2000,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"anti_scraping": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "A more hardened anti-automation policy that is meant to stop scrapers by using faster and harsher convictions.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1942,11 +2022,13 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 		"behavioral_waf": {
 			Type:     schema.TypeList,
 			Optional: true,
+			Description: "Cox's sophisticated user behaviour and reputation analysis rules.",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"spam_protection": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Challenge and block user sessions and activities that seem to be aggressively using forms on your website to post spam content, generate new accounts, and more. Also, require a handshake (if not already provided) to clients making POST requests.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1965,6 +2047,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"block_probing_and_forced_browsing": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Challenge or block sessions and users that seem to make brute-forced requests on random URLs seeking to discover a Web application's structure and hidden directories.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -1983,6 +2066,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"obfuscated_attacks_and_zeroday_mitigation": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Block clients performing multiple injection attacks.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -2001,6 +2085,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"repeated_violations": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Challenge or block clients that failed to answer previous challenges.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -2019,6 +2104,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"bruteforce_protection": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Challenge and block attempts seeking to guess user names and passwords on Web login forms.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -2040,6 +2126,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 		"cms_protection": {
 			Type:     schema.TypeList,
 			Optional: true,
+			Description: "Whitelist admin users.",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"wordpress_waf_ruleset": {
@@ -2063,6 +2150,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"whitelist_wordpress": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Enable whitelist WordPress admin logged-in users.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -2081,6 +2169,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"whitelist_modx": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Enable whitelist MODX admin logged-in users.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -2099,6 +2188,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"whitelist_drupal": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Enable whitelist Drupal admin logged-in users.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -2117,6 +2207,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"whitelist_joomla": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Enable whitelist Joomla admin logged-in users.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -2135,6 +2226,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"whitelist_magento": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Enable whitelist Magento admin logged-in users.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -2153,6 +2245,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"whitelist_origin_ip": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Enable this policy to whitelist requests coming from the origin for plugin updates and general CMS updates",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -2171,6 +2264,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 					"whitelist_umbraco": {
 						Type:     schema.TypeString,
 						Optional: true,
+						Description: "Enable whitelist Umbraco admin logged-in users.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
 							value := i.(string)
@@ -2192,6 +2286,7 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 		"allow_known_bots": {
 			Type:     schema.TypeList,
 			Optional: true,
+			Description: "An object containing known bots.",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"acquia_uptime": {
@@ -4499,47 +4594,57 @@ func getFirewallRuleSchema() map[string]*schema.Schema {
 func getScriptSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The unique identifier for the script.",
 		},
 		"stack_id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The ID of the stack that the script belongs to.",
 		},
 		"site_id": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The ID of the site that the script belongs to.",
 		},
 		"environment_name": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The name of the environment that the site belongs to.",
 		},
 		"name": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The name of the script.",
 		},
 		"created_at": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "Creation timestamp of the script.",
 		},
 		"updated_at": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The date on which the script was last updated.",
 		},
 		"version": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Description: "The version number of the script.",
 		},
 		"code": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The JavaScript code used for the script.",
 		},
 		"routes": {
 			Type: schema.TypeList,
 			Elem: &schema.Schema{
 				Type: schema.TypeString,
 			},
-			Required: true,
+			Required:    true,
+			Description: "The routes that incoming requests should respond with a script.",
 		},
 	}
 }
