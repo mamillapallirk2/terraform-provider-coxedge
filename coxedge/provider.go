@@ -19,6 +19,7 @@ func Provider() *schema.Provider {
 				Type:        schema.TypeString,
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("COXEDGE_KEY", nil),
+				Description: "The API key is found from the API keys section under the user profile menu. If you don't see Cox Edge API keys section, contact your system administrator as you may not have the permission to see that section. Your API key carries the same privileges as your Cox Edge account, so be sure to keep it secret. If you think your API has been compromised, regenerate your API key from the API keys section.",
 			},
 		},
 		DataSourcesMap: map[string]*schema.Resource{

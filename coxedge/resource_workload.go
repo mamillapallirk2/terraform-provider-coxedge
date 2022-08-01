@@ -24,7 +24,8 @@ func resourceWorkload() *schema.Resource {
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
 		},
-		Schema: getWorkloadSchema(),
+		Schema:      getWorkloadSchema(),
+		Description: "Cox Edge Computing uses the concept of workloads to organize different applications. A workload can consist of one container or virtual machine image that is deployed to one or many locations.",
 	}
 }
 

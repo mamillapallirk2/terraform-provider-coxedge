@@ -3,12 +3,12 @@
 page_title: "coxedge_workload Resource - terraform-provider-coxedge"
 subcategory: ""
 description: |-
-  
+  Cox Edge Computing uses the concept of workloads to organize different applications. A workload can consist of one container or virtual machine image that is deployed to one or many locations.
 ---
 
 # coxedge_workload (Resource)
 
-
+Cox Edge Computing uses the concept of workloads to organize different applications. A workload can consist of one container or virtual machine image that is deployed to one or many locations.
 
 
 
@@ -18,27 +18,27 @@ description: |-
 ### Required
 
 - `deployment` (Block List, Min: 1) (see [below for nested schema](#nestedblock--deployment))
-- `environment_name` (String)
-- `image` (String)
-- `name` (String)
-- `specs` (String)
-- `type` (String)
+- `environment_name` (String) The name of the environment that the site belongs to.
+- `image` (String) Either the location of a Docker image to run as a container or the image to use for the virtual machine. If for a virtual machine, this is in the format of /[:]. If the image tag portion is omitted, 'default' is assumed which is the most recently created, ready, and non-deprecated image of that slug. A set of common images is present on the 'cox-edge' stack.
+- `name` (String) The name of the workload.
+- `specs` (String) Specification type for resources which are allocated to each instance in a workload. Supported specifications are SP-1 (1 vCPU, 2 GB RAM),SP-2 (2 vCPU, 4 GB RAM),SP-3 (2 vCPU, 8GB RAM),SP-4 (4 vCPU, 16 GB RAM),SP-5 (8 vCPU, 32 GB RAM).
+- `type` (String) Specify whether a workload is a VM-based workload or container-based. Can be either VM or CONTAINER.
 
 ### Optional
 
-- `add_anycast_ip_address` (Boolean)
-- `anycast_ip_address` (String)
-- `commands` (List of String)
-- `container_email` (String)
-- `container_password` (String, Sensitive)
-- `container_server` (String)
-- `container_username` (String)
-- `environment_variables` (Map of String)
-- `first_boot_ssh_key` (String)
-- `persistent_storages` (Block List) (see [below for nested schema](#nestedblock--persistent_storages))
-- `ports` (Block List) (see [below for nested schema](#nestedblock--ports))
-- `secret_environment_variables` (Map of String)
-- `slug` (String)
+- `add_anycast_ip_address` (Boolean) Option to AnyCast IP Address.
+- `anycast_ip_address` (String) The Anycast IP address assigned to a workload. If there is no IP assigned to the workload then the value of this attribute will be None.
+- `commands` (List of String) The commands that start a container. Only applicable to workloads of type 'CONTAINER'. Commands cannot be updated or removed after workload creation.
+- `container_email` (String) The email address to use for the docker registry account
+- `container_password` (String, Sensitive) The password used to authenticate the image pull.
+- `container_server` (String) The server that the credentials should be used with. This value will default to the docker hub registry when not set.
+- `container_username` (String) The username used to authenticate the image pull.
+- `environment_variables` (Map of String) A list of environment variables. Only applicable to workloads of type 'CONTAINER'.
+- `first_boot_ssh_key` (String) If creating a VM-based workload, SSH keys are required. Multiple SSH keys can be separated by newlines \n.
+- `persistent_storages` (Block List) Persistent storage volumes used by the workload. (see [below for nested schema](#nestedblock--persistent_storages))
+- `ports` (Block List) A list of network interfaces that will be created for each workload instance. (see [below for nested schema](#nestedblock--ports))
+- `secret_environment_variables` (Map of String) A list of sensitive environment variables. Only applicable to workloads of type 'CONTAINER'.
+- `slug` (String) A workload's programmatic name. Workload slugs are used to build its instances names. If not provided, defaults to workload's name. It must not exceed 18 characters.
 
 ### Read-Only
 
@@ -49,16 +49,16 @@ description: |-
 
 Required:
 
-- `name` (String)
-- `pops` (List of String)
+- `name` (String) The name of the deployment.
+- `pops` (List of String) The points of presence of a deployment. In the regex format [A-Z]{3, 3}.
 
 Optional:
 
-- `cpu_utilization` (Number)
-- `enable_autoscaling` (Boolean)
-- `instances_per_pop` (Number)
-- `max_instances_per_pop` (Number)
-- `min_instances_per_pop` (Number)
+- `cpu_utilization` (Number) The percentage of CPU utilization. Only applicable if autoscaling is enabled.
+- `enable_autoscaling` (Boolean) Specifies if autoscaling is enabled. If enabled, then cpuUtilization , minInstancesPerPop and maxInstancesPerPop are required.
+- `instances_per_pop` (Number) The number of instances per point of presence. Only applicable if autoscaling is not enabled.
+- `max_instances_per_pop` (Number) The maximum number of instances per PoP. Only applicable if autoscaling is enabled. Should be greater than zero and less than 50.
+- `min_instances_per_pop` (Number) The minimum number of instances per PoP. Only applicable if autoscaling is enabled. Should be greater than zero and less than 50.
 
 
 <a id="nestedblock--persistent_storages"></a>
@@ -66,8 +66,8 @@ Optional:
 
 Required:
 
-- `path` (String)
-- `size` (Number)
+- `path` (String) The path in an instance to mount a volume.
+- `size` (Number) The size of the mounted volume (in GB).
 
 
 <a id="nestedblock--ports"></a>
@@ -75,9 +75,9 @@ Required:
 
 Required:
 
-- `protocol` (String)
-- `public_port` (String)
-- `public_port_desc` (String)
-- `public_port_src` (String)
+- `protocol` (String) Protocol for the network policy rule. Supported protocols are: TCP, UDP and TCP_UDP.
+- `public_port` (String) A single port, such as 80 or a port range, such as 1024-65535 for which a network policy rule will be created for the workload.
+- `public_port_desc` (String) A summary of what the network policy rule does or a name for it. It is highly recommended to give a unique description to easily identify a network policy rule. Defaults to an empty string if not provided.
+- `public_port_src` (String) A subnet that will define all the IPs allowed by the network policy rule. Defaults to 0.0.0.0/0 if not specified.
 
 

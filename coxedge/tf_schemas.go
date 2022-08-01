@@ -336,24 +336,29 @@ func getWorkloadSchema() map[string]*schema.Schema {
 			Computed: true,
 		},
 		"environment_name": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The name of the environment that the site belongs to.",
 		},
 		"name": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "The name of the workload.",
 		},
 		"image": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "Either the location of a Docker image to run as a container or the image to use for the virtual machine. If for a virtual machine, this is in the format of /[:]. If the image tag portion is omitted, 'default' is assumed which is the most recently created, ready, and non-deprecated image of that slug. A set of common images is present on the 'cox-edge' stack.",
 		},
 		"specs": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "Specification type for resources which are allocated to each instance in a workload. Supported specifications are SP-1 (1 vCPU, 2 GB RAM),SP-2 (2 vCPU, 4 GB RAM),SP-3 (2 vCPU, 8GB RAM),SP-4 (4 vCPU, 16 GB RAM),SP-5 (8 vCPU, 32 GB RAM).",
 		},
 		"type": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
+			Description: "Specify whether a workload is a VM-based workload or container-based. Can be either VM or CONTAINER.",
 		},
 		"deployment": {
 			Type:     schema.TypeList,
@@ -361,133 +366,159 @@ func getWorkloadSchema() map[string]*schema.Schema {
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"name": {
-						Type:     schema.TypeString,
-						Required: true,
+						Type:        schema.TypeString,
+						Required:    true,
+						Description: "The name of the deployment.",
 					},
 					"pops": {
 						Type: schema.TypeList,
 						Elem: &schema.Schema{
 							Type: schema.TypeString,
 						},
-						Required: true,
+						Required:    true,
+						Description: "The points of presence of a deployment. In the regex format [A-Z]{3, 3}.",
 					},
 					"enable_autoscaling": {
-						Type:     schema.TypeBool,
-						Default:  false,
-						Optional: true,
+						Type:        schema.TypeBool,
+						Default:     false,
+						Optional:    true,
+						Description: "Specifies if autoscaling is enabled. If enabled, then cpuUtilization , minInstancesPerPop and maxInstancesPerPop are required.",
 					},
 					"instances_per_pop": {
-						Type:     schema.TypeInt,
-						Optional: true,
-						Default:  -1,
+						Type:        schema.TypeInt,
+						Optional:    true,
+						Default:     -1,
+						Description: "The number of instances per point of presence. Only applicable if autoscaling is not enabled.",
 					},
 					"max_instances_per_pop": {
-						Type:     schema.TypeInt,
-						Optional: true,
+						Type:        schema.TypeInt,
+						Optional:    true,
+						Description: "The maximum number of instances per PoP. Only applicable if autoscaling is enabled. Should be greater than zero and less than 50.",
 					},
 					"min_instances_per_pop": {
-						Type:     schema.TypeInt,
-						Optional: true,
+						Type:        schema.TypeInt,
+						Optional:    true,
+						Description: "The minimum number of instances per PoP. Only applicable if autoscaling is enabled. Should be greater than zero and less than 50.",
 					},
 					"cpu_utilization": {
-						Type:     schema.TypeInt,
-						Optional: true,
+						Type:        schema.TypeInt,
+						Optional:    true,
+						Description: "The percentage of CPU utilization. Only applicable if autoscaling is enabled.",
 					},
 				},
 			},
 		},
 		"add_anycast_ip_address": {
-			Type:     schema.TypeBool,
-			Optional: true,
-			Default:  false,
+			Type:        schema.TypeBool,
+			Optional:    true,
+			Default:     false,
+			Description: "Option to AnyCast IP Address.",
 		},
 		"anycast_ip_address": {
-			Type:     schema.TypeString,
-			Computed: true,
-			Optional: true,
+			Type:        schema.TypeString,
+			Computed:    true,
+			Optional:    true,
+			Description: "The Anycast IP address assigned to a workload. If there is no IP assigned to the workload then the value of this attribute will be None.",
 		},
 		"commands": {
 			Type: schema.TypeList,
 			Elem: &schema.Schema{
 				Type: schema.TypeString,
 			},
-			Optional: true,
+			Optional:    true,
+			Description: "The commands that start a container. Only applicable to workloads of type 'CONTAINER'. Commands cannot be updated or removed after workload creation.",
 		},
 		"container_email": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The email address to use for the docker registry account",
 		},
 		"container_username": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The username used to authenticate the image pull.",
 		},
 		"container_password": {
-			Type:      schema.TypeString,
-			Sensitive: true,
-			Optional:  true,
+			Type:        schema.TypeString,
+			Sensitive:   true,
+			Optional:    true,
+			Description: "The password used to authenticate the image pull.",
 		},
 		"container_server": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "The server that the credentials should be used with. This value will default to the docker hub registry when not set.",
 		},
 		"environment_variables": {
-			Type:     schema.TypeMap,
-			Elem:     &schema.Schema{Type: schema.TypeString},
-			Optional: true,
+			Type:        schema.TypeMap,
+			Elem:        &schema.Schema{Type: schema.TypeString},
+			Optional:    true,
+			Description: "A list of environment variables. Only applicable to workloads of type 'CONTAINER'.",
 		},
 		"first_boot_ssh_key": {
-			Type:     schema.TypeString,
-			Elem:     &schema.Schema{Type: schema.TypeString},
-			Optional: true,
+			Type:        schema.TypeString,
+			Elem:        &schema.Schema{Type: schema.TypeString},
+			Optional:    true,
+			Description: "If creating a VM-based workload, SSH keys are required. Multiple SSH keys can be separated by newlines \\n.",
 		},
 		"ports": {
-			Type:     schema.TypeList,
-			Optional: true,
+			Type:        schema.TypeList,
+			Optional:    true,
+			Description: "A list of network interfaces that will be created for each workload instance.",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"protocol": {
-						Type:     schema.TypeString,
-						Required: true,
+						Type:        schema.TypeString,
+						Required:    true,
+						Description: "Protocol for the network policy rule. Supported protocols are: TCP, UDP and TCP_UDP.",
 					},
 					"public_port": {
-						Type:     schema.TypeString,
-						Required: true,
+						Type:        schema.TypeString,
+						Required:    true,
+						Description: "A single port, such as 80 or a port range, such as 1024-65535 for which a network policy rule will be created for the workload.",
 					},
 					"public_port_desc": {
-						Type:     schema.TypeString,
-						Required: true,
+						Type:        schema.TypeString,
+						Required:    true,
+						Description: "A summary of what the network policy rule does or a name for it. It is highly recommended to give a unique description to easily identify a network policy rule. Defaults to an empty string if not provided.",
 					},
 					"public_port_src": {
-						Type:     schema.TypeString,
-						Required: true,
+						Type:        schema.TypeString,
+						Required:    true,
+						Description: "A subnet that will define all the IPs allowed by the network policy rule. Defaults to 0.0.0.0/0 if not specified.",
 					},
 				},
 			},
 		},
 		"persistent_storages": {
-			Type:     schema.TypeList,
-			Optional: true,
+			Type:        schema.TypeList,
+			Optional:    true,
+			Description: "Persistent storage volumes used by the workload.",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"path": {
-						Type:     schema.TypeString,
-						Required: true,
+						Type:        schema.TypeString,
+						Required:    true,
+						Description: "The path in an instance to mount a volume.",
 					},
 					"size": {
-						Type:     schema.TypeInt,
-						Required: true,
+						Type:        schema.TypeInt,
+						Required:    true,
+						Description: "The size of the mounted volume (in GB).",
 					},
 				},
 			},
 		},
 		"secret_environment_variables": {
-			Type:     schema.TypeMap,
-			Elem:     &schema.Schema{Type: schema.TypeString},
-			Optional: true,
+			Type:        schema.TypeMap,
+			Elem:        &schema.Schema{Type: schema.TypeString},
+			Optional:    true,
+			Description: "A list of sensitive environment variables. Only applicable to workloads of type 'CONTAINER'.",
 		},
 		"slug": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
+			Description: "A workload's programmatic name. Workload slugs are used to build its instances names. If not provided, defaults to workload's name. It must not exceed 18 characters.",
 		},
 	}
 }
@@ -1322,18 +1353,18 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 			Description: "The name of the environment that the site belongs to.",
 		},
 		"site_id": {
-			Type:     schema.TypeString,
-			Required: true,
+			Type:        schema.TypeString,
+			Required:    true,
 			Description: "The ID of the site for which the WAF is applied to.",
 		},
 		"stack_id": {
-			Type:     schema.TypeString,
-			Computed: true,
+			Type:        schema.TypeString,
+			Computed:    true,
 			Description: "The ID of the stack that a site belongs to.",
 		},
 		"domain": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
 			Description: "The domain of the site.",
 		},
 		"api_urls": {
@@ -1341,36 +1372,36 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 			Elem: &schema.Schema{
 				Type: schema.TypeString,
 			},
-			Optional: true,
+			Optional:    true,
 			Description: "List of configured API urls.",
 		},
 		"ddos_settings": {
-			Type:     schema.TypeList,
-			Optional: true,
+			Type:        schema.TypeList,
+			Optional:    true,
 			Description: "The DDoS Setting containing the different threshold values.",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"global_threshold": {
-						Type:     schema.TypeInt,
-						Required: true,
+						Type:        schema.TypeInt,
+						Required:    true,
 						Description: "The number of overall requests per ten seconds that can trigger DDoS protection.",
 					},
 					"burst_threshold": {
-						Type:     schema.TypeInt,
-						Required: true,
+						Type:        schema.TypeInt,
+						Required:    true,
 						Description: "The number of requests per two seconds that can trigger DDoS protection.",
 					},
 					"subsecond_burst_threshold": {
-						Type:     schema.TypeInt,
-						Required: true,
+						Type:        schema.TypeInt,
+						Required:    true,
 						Description: "The number of requests per 0.1 seconds that can trigger DDoS protection.",
 					},
 				},
 			},
 		},
 		"monitoring_mode_enabled": {
-			Type:     schema.TypeString,
-			Optional: true,
+			Type:        schema.TypeString,
+			Optional:    true,
 			Description: "If the monitoring mode is enabled.",
 			ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 				var diags diag.Diagnostics
@@ -1388,14 +1419,14 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 			},
 		},
 		"owasp_threats": {
-			Type:     schema.TypeList,
-			Optional: true,
+			Type:        schema.TypeList,
+			Optional:    true,
 			Description: "Cox’s core rule set & OWASP’s most critical Web application security risks.",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"sql_injection": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Block requests suspected of being a SQL injection attack attempt. SQL injection attacks attempt to exploit vulnerabilities in a Web application's code and seek to gain access and control over the database. A successful attack would typically result in stolen data or the site being defaced or taken down.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1413,8 +1444,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"xss_attack": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Block requests suspected of being a Cross-Site-Scripting attack attempt. Cross Site Scripting attacks attempt to exploit vulnerabilities in a Web application and seek to inject a client side script either across an entire site or to a specific user's session. A successful attack would typically allow forbidden access to a user's actions and data.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1432,8 +1463,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"shell_shock_attack": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Block requests suspected of being a Shellshock attack attempt. A Shellshock attack is an attempt to exploit a server's vulnerabilities to gain full access and control over them. A successful attack would typically either abuse a server's resources or hack the website.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1451,8 +1482,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"remote_file_inclusion": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Block requests suspected of being a Remote File Inclusion attempt. Remote File Inclusion attempts to exploit vulnerabilities in a Web application (typically in PHP) to execute a script from a 3rd party server. RFI attacks provide a backdoor for the hacker to change the behaviour of a server and Web application.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1470,8 +1501,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"apache_struts_exploit": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Patch known vulnerabilities in the Apache Struts framework by blocking requests suspected of exploiting these vulnerabilities.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1489,8 +1520,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"local_file_inclusion": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Block requests suspected of a Local File Inclusion attempt. Local File Inclusion attempts seek to exploit vulnerabilities in a Web application to execute potentially harmful scripts on your servers.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1508,8 +1539,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"common_web_application_vulnerabilities": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Block attempts to access and potentially harm your servers through common backdoors, such as common control panels, configuration scripts etc. which may be accessible to unwanted users.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1527,8 +1558,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"webshell_execution_attempt": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Block requests suspected of Web shell attempts. A Web shell is a script that can be uploaded to a Web server to enable remote administration of the machine. Infected Web servers can either be internet-facing or internal to the network, where the Web shell is used to further pivot to internal hosts.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1564,8 +1595,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"csrf": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Cox WAF will generate a CSRF token that is added to forms. Requests without a valid CSRF token will be blocked.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1583,8 +1614,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"open_redirect": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Block requests suspected of being an Open Redirect attempt. Open Redirect attempts to exploit vulnerabilities in a Web application to redirect a user to a new website without any validation of the target of redirect.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1602,8 +1633,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"shell_injection": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Block requests suspected of being a shell injection attack attempt. Shell Injection is an attack in which the goal is execution of arbitrary commands on the host operating system via a vulnerable application. Command injection attacks are possible when an application passes unsafe user supplied data (forms, cookies, HTTP headers etc.) to a system shell.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1776,14 +1807,14 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 			},
 		},
 		"traffic_sources": {
-			Type:     schema.TypeList,
-			Optional: true,
+			Type:        schema.TypeList,
+			Optional:    true,
 			Description: "Real-time threat intelligence for IP addresses, source location, and information on malicious IPs.",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"via_tor_nodes": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Challenge traffic from The Onion Ring exit nodes to block bots and known bad devices. While TOR is used sometimes purely for Web anonymity, it is commonly used by hackers, scrapers, and spammers to crawl or hack Web applications.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1801,8 +1832,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"via_proxy_networks": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Challenge traffic from any known proxy network to block bots and known bad devices. While proxy services are used sometimes purely for Web anonymity, they are also commonly used by hackers, scrapers, and spammers to crawl or hack Web applications.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1820,8 +1851,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"via_hosting_services": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Challenge traffic from IP addresses known to be of hosting service companies. This rule is unlikely to see legitimate human traffic on these IP spaces since they are typically used for server hosting. In most cases, traffic from these IP spaces originate from infected servers that are controlled by hackers.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1839,8 +1870,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"via_vpn": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Challenge traffic from any known VPN to block bots and known bad devices. While VPNs are sometimes used purely for Web anonymity, they are also commonly used by hackers, scrapers, and spammers to crawl or hack Web applications.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1858,8 +1889,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"convicted_bot_traffic": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Challenge traffic from IP addresses that have been convicted of automated activities (bots) on this site or on others. These IP addresses are used by malicious automated agents while no legitimate traffic has been observed on them.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1877,8 +1908,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"traffic_from_suspicious_nat_ranges": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Challenge traffic from suspicious NAT ranges.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1935,14 +1966,14 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 			},
 		},
 		"anti_automation_bot_protection": {
-			Type:     schema.TypeList,
-			Optional: true,
+			Type:        schema.TypeList,
+			Optional:    true,
 			Description: "Block automated traffic from scanning and browsing your online application.",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"force_browser_validation_on_traffic_anomalies": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Challenge and block requests if the user or device behind them does not keep session cookies and does not execute JavaScripts correctly. Most malicious automated activities (bots) do not meet these conditions and will, therefore, effectively be blocked by the JavaScript challenge triggered in any suspected situation. Clients can also be blocked depending on whether they act in an abnormal to the specific domain—by scraping content in a way that most sessions on this domain don't—or clients that try to, for example, avoid detection by switching IPs.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1960,8 +1991,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"challenge_automated_clients": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Captcha-challenge and block sessions conducted by standard Web browsers if there is evidence that these sessions are being automated and not driven by a human user. Such automation is used primarily for screen scraping and other very targeted, site-specific malicious automation.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1979,8 +2010,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"challenge_headless_browsers": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Challenge requests if the user or device behind them uses an automation tool that initiates browsers but is actually an automation tool without real display—such as phantomJS, Selenium, or other. While such tools are favored by programmers, they are also extremely popular with scrapers, hackers and even in sophisticated DDoS attacks to circumvent standard anti-bot measures.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -1998,8 +2029,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"anti_scraping": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "A more hardened anti-automation policy that is meant to stop scrapers by using faster and harsher convictions.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -2020,14 +2051,14 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 			},
 		},
 		"behavioral_waf": {
-			Type:     schema.TypeList,
-			Optional: true,
+			Type:        schema.TypeList,
+			Optional:    true,
 			Description: "Cox's sophisticated user behaviour and reputation analysis rules.",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
 					"spam_protection": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Challenge and block user sessions and activities that seem to be aggressively using forms on your website to post spam content, generate new accounts, and more. Also, require a handshake (if not already provided) to clients making POST requests.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -2045,8 +2076,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"block_probing_and_forced_browsing": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Challenge or block sessions and users that seem to make brute-forced requests on random URLs seeking to discover a Web application's structure and hidden directories.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -2064,8 +2095,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"obfuscated_attacks_and_zeroday_mitigation": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Block clients performing multiple injection attacks.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -2083,8 +2114,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"repeated_violations": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Challenge or block clients that failed to answer previous challenges.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -2102,8 +2133,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"bruteforce_protection": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Challenge and block attempts seeking to guess user names and passwords on Web login forms.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -2124,8 +2155,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 			},
 		},
 		"cms_protection": {
-			Type:     schema.TypeList,
-			Optional: true,
+			Type:        schema.TypeList,
+			Optional:    true,
 			Description: "Whitelist admin users.",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
@@ -2148,8 +2179,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"whitelist_wordpress": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Enable whitelist WordPress admin logged-in users.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -2167,8 +2198,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"whitelist_modx": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Enable whitelist MODX admin logged-in users.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -2186,8 +2217,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"whitelist_drupal": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Enable whitelist Drupal admin logged-in users.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -2205,8 +2236,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"whitelist_joomla": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Enable whitelist Joomla admin logged-in users.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -2224,8 +2255,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"whitelist_magento": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Enable whitelist Magento admin logged-in users.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -2243,8 +2274,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"whitelist_origin_ip": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Enable this policy to whitelist requests coming from the origin for plugin updates and general CMS updates",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -2262,8 +2293,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 						},
 					},
 					"whitelist_umbraco": {
-						Type:     schema.TypeString,
-						Optional: true,
+						Type:        schema.TypeString,
+						Optional:    true,
 						Description: "Enable whitelist Umbraco admin logged-in users.",
 						ValidateDiagFunc: func(i interface{}, path cty.Path) diag.Diagnostics {
 							var diags diag.Diagnostics
@@ -2284,8 +2315,8 @@ func getWAFSettingsSchema() map[string]*schema.Schema {
 			},
 		},
 		"allow_known_bots": {
-			Type:     schema.TypeList,
-			Optional: true,
+			Type:        schema.TypeList,
+			Optional:    true,
 			Description: "An object containing known bots.",
 			Elem: &schema.Resource{
 				Schema: map[string]*schema.Schema{
